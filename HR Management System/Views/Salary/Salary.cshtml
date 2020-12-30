@@ -1,0 +1,264 @@
+﻿@model HR_Management_System.Models.Salary
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div div class="col-sm-5 col-5">
+                <h4 class="page-title">Employee Salary</h4>
+            </div>
+            <div class="col-sm-7 col-7 text-right m-b-30">
+                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_salary"><i class="fa fa-plus"></i> Add Salary</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">Employee</th>
+                                <th>Employee ID</th>
+                                <th>Email</th>
+                                <th>Joining Date</th>
+                                <th>Role</th>
+                                <th>Salary</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">J</a>
+                                    <h2><a href="profile.html">John Doe <span>Web Designer</span></a></h2>
+                                </td>
+                                <td>FT-0001</td>
+                                <td>johndoe@example.com</td>
+                                <td>1 Jan 2013</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Designer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Admin</a></li>
+                                            <li><a href="#">Manager</a></li>
+                                            <li><a href="#">HOD</a></li>
+                                            <li><a href="#">Employee</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td>$59698</td>
+                                <td><a class="btn btn-xs btn-primary" href="salary-view.html">Generate Slip</a></td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_salary" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_salary" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="add_salary" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Employee Salary</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Salary","Salary",FormMethod.Post))
+                {
+    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @*@Html.DropDownList("OSRddl",null, "Please select Company")*@
+                                <label class="control-label">Company</label>
+                                @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", required = "required" })
+                                @*@Html.DropDownList("CmpName", null, htmlAttributes: new { @class = "form-control" })*@
+                                @*<select class="select" id="empcompany" name="empcompany">
+                                    @{ foreach (var item in ViewBag.cmp)
+                                        {*@
+                            @*<option value="@item.CmpName">@item.CmpName</option>*@
+                            @*<option value="1">Delta Infotech</option>*@ @*} }*@
+                                @*</select>*@
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Department</label>
+                                @Html.DropDownListFor(item => @Model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control", required = "required" })
+                                @*<select class="select" id="empdept" name="empdept">
+                                           @{ foreach (var item in ViewBag.dept)
+                                               {
+                               <option value="@item.DeptName">@item.DeptName</option>
+        } }
+
+                                       </select>*@
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Employee</label>
+                                @Html.DropDownListFor(item => @Model.EmpId, ViewBag.emp as SelectList, "--- Select Employee ----", new { @class = "form-control", required = "required" })
+                                @*<select class="select" id="empsal" name="empsal">
+                                           @{ foreach (var item in ViewBag.emp)
+                                               {
+                               <option value="@item.LName">@item.LName</option>
+        } }
+
+                                       </select>*@
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="hidden" name="empid" id="empid" />
+                        </div>
+                        <div class="col-md-6">
+
+                            <h4 class="text-primary">Earnings</h4>
+
+                            <div class="form-group">
+                                <label>Basic</label>
+                                @Html.EditorFor(model => model.Basic, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="basicsal" name="basicsal">*@
+                            </div>
+
+                            <div class="form-group">
+                                <label>Allowance</label>
+                                @Html.EditorFor(model => model.Allowance, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="allowance" name="allowance">*@
+                            </div>
+                            <div class="form-group">
+                                <label>Medical  Allowance</label>
+                                @Html.EditorFor(model => model.Medical, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="medallowance" name="medallowance">*@
+                            </div>
+                            @*<div class="form-group">
+                                    <label>Others</label>
+                                    <input class="form-control" type="text" id="other1" name="other1">
+                                </div>*@
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-primary">Deductions</h4>
+
+                            <div class="form-group">
+                                <label>Tax</label>
+                                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="tax" name="tax">*@
+                            </div>
+                            <div class="form-group">
+                                <label>Labour Welfare</label>
+                                @Html.EditorFor(model => model.LabourWelfare, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="labour" name="labour">*@
+                            </div>
+                            <div class="form-group">
+                                <label>Fund</label>
+                                @Html.EditorFor(model => model.Fund, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="fund" name="fund">*@
+                            </div>
+                            @*<div class="form-group">
+                                    <label>Others</label>
+                                    <input class="form-control" type="text" id="other2" name="other2">
+                                </div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>Total Salary</label>
+                            @Html.EditorFor(model => model.NetSalary, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="totalsal" name="totalsal">*@
+                        </div>
+                    </div>
+                                    <div class="m-t-20 text-center">
+                                        <button class="btn btn-primary">Create Salary</button>
+                                    </div>}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="edit_salary" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Staff Salary</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="text-primary">Earnings</h4>
+
+                            <div class="form-group">
+                                <label>Basic</label>
+                                <input class="form-control" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Allowance</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Medical  Allowance</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Others</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-primary">Deductions</h4>
+
+                            <div class="form-group">
+                                <label>Prof. Tax</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Labour Welfare</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Fund</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Others</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary">Create Salary</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delete_salary" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Salary</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>Are you sure want to delete this?</p>
+                    <div class="m-t-20 text-left">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

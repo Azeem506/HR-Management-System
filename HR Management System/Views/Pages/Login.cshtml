@@ -1,0 +1,105 @@
+﻿<!------ Include the above in your HEAD tag ---------->
+@{
+    Layout = null;
+}
+
+
+<html>
+<head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Login</title>
+    <link href="CSS/style.css" rel="stylesheet" type="text/css" />
+    @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>*@
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            var message = "@ViewBag.alert";
+            console.log(message);
+            if (message == "InValid User") {
+                alert("User is Invalid.");
+            }
+        });
+    </script>
+
+
+    <style>
+        body {
+            background-image: url("/Photos/sea-2052650_1920.jpg");
+        }
+
+        .form-gap {
+            padding-top: 70px;
+        }
+    </style>
+
+</head>
+<body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <div class="form-gap"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <div class="panel-body">
+
+                                <form action="/Pages/Login" method="POST">
+                                    <h1>Sign In</h1>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
+                                            <input id="txtLogin" name="txtLogin" placeholder="User Name" class="form-control" type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
+                                            <input id="pswd" name="pswd" placeholder="Password" class="form-control" type="password" required>
+                                        </div>
+                                    </div>
+                                    <label class="radio-inline"><input type="radio" name="optradio">Company</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio">Department</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio">Employee</label>
+
+
+
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <a href='@Url.Content("~/Pages/ForgetPass")' style="color:blue">Forget Password?</a>
+                                        </div>
+                                    </div>
+                                    <input type="submit" value="Login" name="btnSubmit" />
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+
+
+
+
+

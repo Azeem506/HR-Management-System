@@ -1,0 +1,283 @@
+﻿
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-5 col-5">
+                <h4 class="page-title">Department</h4>
+            </div>
+            <div class="col-sm-7 col-7 text-right m-b-30">
+                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add New Department</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table mb-0 datatable">
+                        <thead>
+                            <tr>
+                                <th>Dep id</th>
+                                <th>Department Name</th>
+                                @*<th>Company Name</th>*@
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in ViewBag.dept)
+                            {
+                                <tr>
+
+                                    <td>@item.DeptId</td>
+                                    <td>@item.DeptName</td>
+                                    @*@{ foreach (var item in ViewBag.cmp)
+                {
+                    <td>@item.DeptName</td>
+                }*@
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li><a href="#" class="editDepartmentBtn" data-id="@item.DeptId" data-toggle="modal" data-target="#edit_department" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                                <li><a href="#" class="deleteDepartmentBtn" data-id="@item.DeptId" data-toggle="modal" data-target="#delete_department" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                                @*<li><a href="#" class="editDepartmentBtn" data-id="@item.CmpId" data-toggle="modal" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                            <li><a href="#" class="deleteCompanyBtn" data-id="@item.CmpId" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>*@
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    
+                                </tr>
+                            }
+
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="delete_department" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Department</h4>
+            </div>
+            <div class="modal-body card-box">
+                <form action="~/Department/DelDepartment" method="post">
+                    <p>Are you sure want to delete this?</p>
+                    <input type="hidden" name="delete1" id="delete1" />
+                    <div class="m-t-20 text-left">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="add_department" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Department</h4>
+            </div>
+            <div class="modal-body">
+                <div class="m-b-30">
+                    <form action="~/Department/AddDepartment" method="post">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Username <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" id="username" name="username">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Password</label>
+                                    <input class="form-control" type="password" id="password" name="password">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Confirm Password</label>
+                                    <input class="form-control" type="password" id="cpassword" name="cpassword">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Email <span class="text-danger">*</span></label>
+                                    <input class="form-control floating" type="email" id="email" name="email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Department Name</label>
+                                    <input class="form-control" type="text" id="dname" name="dname">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Department ID <span class="text-danger">*</span></label>
+                                    <input class="form-control floating" type="text" id="did" name="did">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Phone </label>
+                                    <input class="form-control" type="text" id="phone" name="phone">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    @*@Html.DropDownList("OSRddl",null, "Please select Company")*@
+                                    <label class="control-label">Company</label>
+                                    <select class="select" id="empcompany" name="empcompany">
+                                        @{ foreach (var item in ViewBag.cmp)
+                                            {
+                                <option value="@item.CmpName">@item.CmpName</option>
+                                @*<option value="1">Delta Infotech</option>*@ } }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive m-t-15">
+
+                        </div>
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary">Add Department</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="edit_department" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Department</h4>
+            </div>
+            <div class="modal-body">
+                <div class="m-b-30">
+                    <form action="~/Department/EditDepartment" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" name="did1" id="did1" />
+                            </div>
+                            <div class="col-md-6">
+                                <input type="hidden" name="did6" id="did6" />
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Username <span class="text-danger">*</span></label>
+                                    <input class="form-control" value="" type="text" id="usernameedit" name="usernameedit">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Password</label>
+                                    <input class="form-control" value="" type="password" id="password1" name="password1">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Email <span class="text-danger">*</span></label>
+                                    <input class="form-control floating" value="" type="email" id="email1" name="email1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Department Name</label>
+                                    <input class="form-control" type="text" value="" id="dname1" name="dname1">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Phone </label>
+                                    <input class="form-control" value="" type="text" id="phone1" name="phone1">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary">Edit Department</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(".editDepartmentBtn").click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        //return;
+        $.ajax({
+            type: "GET",
+            url: "/Department/EditDepartment1/?DesignationiD=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+                //var dd = JSON.parse(d).d;
+                //var department = JSON.parse(dd);
+                //console.log(department);
+
+                console.log(d);
+
+                $("#did1").val(d.DeptId);
+                $("#usernameedit").val(d.UserName);
+                $("#password1").val(d.Password);
+                $("#email1").val(d.Email);
+                $("#dname1").val(d.DeptName);
+                $("#phone1").val(d.Phone);
+
+
+                $("#edit_department").modal("show");
+            }
+        });
+    });
+
+    $(".deleteDepartmentBtn").click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        //return;
+        alert(id);
+        $.ajax({
+            type: "GET",
+            url: "/Department/DelDepartment/?DesignationiD=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+                //var dd = JSON.parse(d).d;
+                //var department = JSON.parse(dd);
+                //console.log(department);
+
+                console.log(d);
+
+                $("#delete1").val(d.DeptId);
+                $("#username").val(d.UserName);
+                $("#password").val(d.Password);
+                $("#email").val(d.Email);
+                $("#DeptName").val(d.CmpName);
+                $("#phone").val(d.Phone);
+
+
+                $("#delete_department").modal("show");
+            }
+        });
+    });
+
+</script>

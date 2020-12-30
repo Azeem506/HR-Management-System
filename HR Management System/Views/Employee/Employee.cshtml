@@ -1,0 +1,359 @@
+﻿@*@model HR_Management_System.Models.Company*@
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@*<link href="~/Content/css/select2.min.css" rel="stylesheet" />*@
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<a href="~/fonts/fontawesome-webfont3e6e.eot">~/fonts/fontawesome-webfont3e6e.eot</a>
+<a href="~/fonts/fontawesome-webfont3e6e.html">~/fonts/fontawesome-webfont3e6e.html</a>
+<a href="~/fonts/fontawesome-webfont3e6e.woff">~/fonts/fontawesome-webfont3e6e.woff</a>
+<a href="~/fonts/fontawesome-webfontd41d.eot">~/fonts/fontawesome-webfontd41d.eot</a>
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-xs-3">
+                <h4 class="page-title">Employee</h4>
+            </div>
+            <div class="col-sm-8 col-xs-9 text-right m-b-20">
+                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                <div class="view-icons">
+                    <a href="employees.html" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                    <a href="employees-list.html" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row staff-grid-row">
+            @foreach (var item in ViewBag.emp)
+            {
+<div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
+    <div class="profile-widget">
+        <div class="profile-img">
+            <a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId })" class="avatar"><img src="@item.EmpImage" style="width:150px; height:100px;" /></a>
+        </div>
+        <div class="dropdown profile-action">
+            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#" class="editEmployeeBtn" data-id="@item.EmpId" data-toggle="modal" data-target="#edit_employee" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                <li><a href="#" class="deleteEmployeeBtn" data-id="@item.EmpId" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                @*<li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>*@
+            </ul>
+        </div>
+        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId})">@item.FName</a></h4>
+        <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId })">@item.LName</a></h5>
+        <div class="small text-muted">Employee</div>
+
+        <a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId })" class="btn btn-default btn-sm m-t-10">View Profile</a>
+
+        @*<h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="~/Employee/EmpProfile">@item.LName</a></h4>
+        <div class="small text-muted">Employee</div>*@
+    </div>
+</div>}
+        </div>
+    </div>
+
+</div>
+<div id="add_employee" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Employee</h4>
+            </div>
+            <div class="modal-body">
+                <form action="~/Employee/AddEmployee" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">First Name <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="empfirstname" name="empfirstname">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Last Name</label>
+                                <input class="form-control" type="text" id="emplastname" name="emplastname">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Username <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="empusername" name="empusername">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Email <span class="text-danger">*</span></label>
+                                <input class="form-control" type="email" id="empemail" name="empemail">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Password</label>
+                                <input class="form-control" type="password" id="emppassword" name="emppassword">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Confirm Password</label>
+                                <input class="form-control" type="password" id="empcpassword" name="empcpassword">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Employee ID <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="empid" name="empid">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Phone </label>
+                                <input class="form-control" type="text" id="empphone" name="empphone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                                <input class="form-control floating" type="file" id="empimage" name="empimage">
+                            </div>
+                        </div>
+                        @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Joining Date <span class="text-danger">*</span></label>
+                                    <div class="cal-icon"><input class="form-control datetimepicker" type="text" id="joindate" name="joindate"></div>
+                                </div>
+                            </div>*@
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                        @*@Html.DropDownList("OSRddl",null, "Please select Company")*@
+                        <label class="control-label">Company</label>
+                        <select class="select" id="empcompany" name="empcompany">
+                            @{ foreach (var item in ViewBag.cmp)
+                                            {
+                                <option value="@item.CmpName"  >@item.CmpName</option> @*<option value="1">Delta Infotech</option>*@ } }
+                        </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Department</label>
+                                <select class="select" id="empdept" name="empdept">
+                                    @{ foreach (var item in ViewBag.dept)
+                                        {
+                                         <option value="@item.DeptName" >@item.DeptName</option>
+} }
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary">Create Employee</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="edit_employee" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Employee</h4>
+            </div>
+            <div class="modal-body">
+                <form action="~/Employee/EditEmployee" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="hiddenid" id="hiddenid" />
+                        </div>
+                        @*<div class="col-md-6">
+                            <input type="hidden" name="hiddenid1" id="hiddenid1" />
+                        </div>*@
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">First Name <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="editfname" name="editfname">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Last Name</label>
+                                <input class="form-control" type="text" id="editlname" name="editlname">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Username <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="editusername" name="editusername">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Email <span class="text-danger">*</span></label>
+                                <input class="form-control" type="email" id="editemail" name="editemail">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Password</label>
+                                <input class="form-control" type="password" id="editpass" name="editpass">
+                            </div>
+                        </div>
+                        @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Confirm Password</label>
+                                    <input class="form-control" type="password" id="empcpassword" name="empcpassword">
+                                </div>
+                            </div>*@
+                        @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Employee ID <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="empid" name="empid">
+                                </div>
+                            </div>*@
+                        @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Joining Date <span class="text-danger">*</span></label>
+                                    <div class="cal-icon"><input class="form-control datetimepicker" type="text" id="joindate" name="joindate"></div>
+                                </div>
+                            </div>*@
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Phone </label>
+                                <input class="form-control" type="text" id="editphone" name="editphone">
+                            </div>
+                        </div>
+                        @*<div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                                <input class="form-control floating" type="file" id="editimage" name="editimage">
+                            </div>
+                        </div>*@
+                        @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Joining Date <span class="text-danger">*</span></label>
+                                    <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
+                                </div>
+                            </div>*@
+
+                        @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Company</label>
+                                    <select class="select">
+                                        <option>Global Technologies</option>
+                                        <option>Delta Infotech</option>
+                                        <option selected>International Software Inc</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Designation</label>
+                                    <select class="select">
+                                        <option>Web Developer</option>
+                                        <option>Web Designer</option>
+                                        <option>SEO Analyst</option>
+                                    </select>
+                                </div>
+                            </div>*@
+                    </div>
+
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delete_employee" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Employee</h4>
+            </div>
+            <form action="~/Employee/DelEmployee" method="post">
+                <div class="modal-body card-box">
+                    <p>Are you sure want to delete this?</p>
+                    <input type="hidden" name="empid1" id="empid1" />
+                    <div class="m-t-20">
+
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(".editEmployeeBtn").click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        //return;
+        $.ajax({
+            type: "GET",
+            url: "/Employee/EditEmployee1/?DesignationiD=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+                //var dd = JSON.parse(d).d;
+                //var department = JSON.parse(dd);
+                //console.log(department);
+
+                console.log(d);
+
+                $("#hiddenid").val(d.EmpId);
+                $("#editfname").val(d.FName);
+                $("#editlname").val(d.LName);
+                $("#editusername").val(d.UserName);
+                $("#editpass").val(d.Password);
+                $("#editemail").val(d.Email);
+                $("#editphone").val(d.Phone);
+                $("#editimage").val(d.EmpImage);
+
+                $("#edit_employee").modal("show");
+            }
+        });
+    });
+
+    $(".deleteEmployeeBtn").click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        //return;
+        alert(id);
+        $.ajax({
+            type: "GET",
+            url: "/Employee/DelEmployee/?DesignationiD=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+                //var dd = JSON.parse(d).d;
+                //var department = JSON.parse(dd);
+                //console.log(department);
+
+                console.log(d);
+
+                $("#empid1").val(d.EmpId);
+                $("#editfname").val(d.FName);
+                $("#editlname").val(d.LName);
+                $("#editusername").val(d.UserName);
+                $("#editpass").val(d.Password);
+                $("#editemail").val(d.Email);
+                $("#editphone").val(d.Phone);
+                $("#editimage").val(d.Image);
+
+                $("#delete_employee").modal("show");
+            }
+        });
+    });
+</script>
