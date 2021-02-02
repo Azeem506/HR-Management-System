@@ -27,22 +27,19 @@ namespace HR_Management_System.Models
         public Nullable<double> Tax { get; set; }
         public Nullable<double> LabourWelfare { get; set; }
         public Nullable<double> Fund { get; set; }
-        public Nullable<int> NetSalary { get; set; }
+        public Nullable<double> NetSalary { get; set; }
         public Nullable<int> CmpId { get; set; }
         public Nullable<int> DeptId { get; set; }
         public Nullable<int> EmpId { get; set; }
         public Nullable<int> UserId { get; set; }
-        public Nullable<int> RoleId { get; set; }
-        public string CmpName { get; set; }
-        public string DeptName { get; set; }
-        public string EmpName { get; set; }
+        public string Date { get; set; }
+        public Nullable<System.TimeSpan> Time { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual Department Department { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual User User { get; set; }
     }
 }

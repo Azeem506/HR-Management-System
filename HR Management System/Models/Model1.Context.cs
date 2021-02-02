@@ -13,10 +13,10 @@ namespace HR_Management_System.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EazisolsEntities3 : DbContext
+    public partial class EazisolsEntities4 : DbContext
     {
-        public EazisolsEntities3()
-            : base("name=EazisolsEntities3")
+        public EazisolsEntities4()
+            : base("name=EazisolsEntities4")
         {
         }
     
@@ -26,13 +26,13 @@ namespace HR_Management_System.Models
         }
     
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Meeting> Meetings { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Salary> Salaries { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<User1> User1 { get; set; }
-        public virtual DbSet<Department> Departments { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model HR_Management_System.Models.Department
 
 <div class="page-wrapper">
     <div class="content">
@@ -7,7 +7,7 @@
                 <h4 class="page-title">Department</h4>
             </div>
             <div class="col-sm-7 col-7 text-right m-b-30">
-                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add New Department</a>
+                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_department"> Add New Department</a>
             </div>
         </div>
         <div class="row">
@@ -18,38 +18,36 @@
                             <tr>
                                 <th>Dep id</th>
                                 <th>Department Name</th>
-                                @*<th>Company Name</th>*@
+                                <th>Company Name</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach (var item in ViewBag.dept)
+                            @foreach (var item in ViewBag.deptviewlist)
                             {
                                 <tr>
 
                                     <td>@item.DeptId</td>
                                     <td>@item.DeptName</td>
-                                    @*@{ foreach (var item in ViewBag.cmp)
-                {
-                    <td>@item.DeptName</td>
-                }*@
+                                    <td>@item.CmpName</td>
+                                        
                                     <td class="text-right">
                                         <div class="dropdown">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <ul class="dropdown-menu pull-right">
-                                                <li><a href="#" class="editDepartmentBtn" data-id="@item.DeptId" data-toggle="modal" data-target="#edit_department" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                                <li><a href="#" class="deleteDepartmentBtn" data-id="@item.DeptId" data-toggle="modal" data-target="#delete_department" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                                <li><a href="#" class="dropdown-item editDepartmentBtn" data-id="@item.DeptId" data-toggle="modal" data-target="#edit_department" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                                <li><a href="#" class="dropdown-item" onclick="DeleteDepartment(@item.DeptId)" data-toggle="modal" data-target="#delete_department" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                                 @*<li><a href="#" class="editDepartmentBtn" data-id="@item.CmpId" data-toggle="modal" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                            <li><a href="#" class="deleteCompanyBtn" data-id="@item.CmpId" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>*@
+                                                    <li><a href="#" class="deleteCompanyBtn" data-id="@item.CmpId" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>*@
                                             </ul>
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             }
 
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -64,14 +62,29 @@
                 <h4 class="modal-title">Delete Department</h4>
             </div>
             <div class="modal-body card-box">
-                <form action="~/Department/DelDepartment" method="post">
+                @Html.Raw(ViewBag.delete)
+            @using (Html.BeginForm("DeleteDepartment", "Department", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <p>Are you sure want to delete this?</p>
+                <div class="col-md-6">
+                    @*<input type="text" name="empid2" id="empid2" />*@
+                    <input type="text" id="Designation_id" />
+                </div>
+                <div class="m-t-20 text-left">
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    <button type="submit" onclick="deletee()" class="btn btn-danger">Delete</button>
+                    @*<button type="submit" class="btn btn-danger">Delete</button>*@
+                </div>}
+                @*<form action="~/Department/DelDepartment" method="post">
                     <p>Are you sure want to delete this?</p>
                     <input type="hidden" name="delete1" id="delete1" />
                     <div class="m-t-20 text-left">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
-                  </form>
+                </form>*@
             </div>
         </div>
     </div>
@@ -85,71 +98,37 @@
             </div>
             <div class="modal-body">
                 <div class="m-b-30">
-                    <form action="~/Department/AddDepartment" method="post">
-                        <div class="row">
+                    @using (Html.BeginForm("Department", "Department", FormMethod.Post))
+                    {
+                @Html.AntiForgeryToken()
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Username <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="username" name="username">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Password</label>
-                                    <input class="form-control" type="password" id="password" name="password">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Confirm Password</label>
-                                    <input class="form-control" type="password" id="cpassword" name="cpassword">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Email <span class="text-danger">*</span></label>
-                                    <input class="form-control floating" type="email" id="email" name="email">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Department Name</label>
-                                    <input class="form-control" type="text" id="dname" name="dname">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Department ID <span class="text-danger">*</span></label>
-                                    <input class="form-control floating" type="text" id="did" name="did">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Phone </label>
-                                    <input class="form-control" type="text" id="phone" name="phone">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    @*@Html.DropDownList("OSRddl",null, "Please select Company")*@
-                                    <label class="control-label">Company</label>
-                                    <select class="select" id="empcompany" name="empcompany">
-                                        @{ foreach (var item in ViewBag.cmp)
-                                            {
-                                <option value="@item.CmpName">@item.CmpName</option>
-                                @*<option value="1">Delta Infotech</option>*@ } }
-                                    </select>
-                                </div>
+                @*<form action="~/Department/AddDepartment" method="post">*@
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Company</label>
+                                @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", required = "required" })
                             </div>
                         </div>
-                        <div class="table-responsive m-t-15">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Department Name</label>
+                                @Html.EditorFor(model => model.DeptName, new { htmlAttributes = new { @class = "form-control" } })
 
+                                @*<input class="form-control" type="text" id="dname" name="dname">*@
+                            </div>
                         </div>
-                        <div class="m-t-20 text-center">
-                            <button class="btn btn-primary">Add Department</button>
-                        </div>
-                    </form>
+                        
+
+                    </div>
+                <div class="table-responsive m-t-15">
+
+                </div>
+                <div class="m-t-20 text-center">
+                    <button class="btn btn-primary">Add Department</button>
+                </div>
+                @*</form>*@}
                 </div>
             </div>
         </div>
@@ -164,54 +143,48 @@
             </div>
             <div class="modal-body">
                 <div class="m-b-30">
-                    <form action="~/Department/EditDepartment" method="post">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="hidden" name="did1" id="did1" />
+                    @using (Html.BeginForm("EditDepartment", "Department", FormMethod.Post))
+                    {
+                @Html.AntiForgeryToken()
+                @*<form action="~/Department/EditDepartment" method="post">*@
+                    <div class="row">
+                        @*<div class="col-md-6">
+            <input type="hidden" name="did1" id="did1" />
+        </div>
+        <div class="col-md-6">
+            <input type="hidden" name="did6" id="did6" />
+        </div>*@
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Company</label>
+                                @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", @id = "editcompany", required = "required" })
                             </div>
-                            <div class="col-md-6">
-                                <input type="hidden" name="did6" id="did6" />
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Username <span class="text-danger">*</span></label>
-                                    <input class="form-control" value="" type="text" id="usernameedit" name="usernameedit">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Password</label>
-                                    <input class="form-control" value="" type="password" id="password1" name="password1">
-                                </div>
-                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Department Name</label>
+                                @Html.EditorFor(model => model.DeptName, new { htmlAttributes = new { @class = "form-control", @id = "editDeptname" } })
 
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Email <span class="text-danger">*</span></label>
-                                    <input class="form-control floating" value="" type="email" id="email1" name="email1">
-                                </div>
+                                @*<input class="form-control" type="text" value="" id="dname1" name="dname1">*@
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Department Name</label>
-                                    <input class="form-control" type="text" value="" id="dname1" name="dname1">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Phone </label>
-                                    <input class="form-control" value="" type="text" id="phone1" name="phone1">
-                                </div>
-                            </div>
-
                         </div>
 
-                        <div class="m-t-20 text-center">
-                            <button class="btn btn-primary">Edit Department</button>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                @Html.EditorFor(model => model.DeptId, new { htmlAttributes = new { @class = "form-control", @id = "editDeptid",Type="hidden" } })
+                                
+
+                            </div>
                         </div>
-                    </form>
+                    </div>
+
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary">Edit Department</button>
+                    </div>
+                @*</form>*@}
                 </div>
             </div>
         </div>
@@ -222,6 +195,7 @@
     $(".editDepartmentBtn").click(function () {
         var id = $(this).data("id");
         console.log(id);
+        //alert(id);
         //return;
         $.ajax({
             type: "GET",
@@ -236,12 +210,9 @@
 
                 console.log(d);
 
-                $("#did1").val(d.DeptId);
-                $("#usernameedit").val(d.UserName);
-                $("#password1").val(d.Password);
-                $("#email1").val(d.Email);
-                $("#dname1").val(d.DeptName);
-                $("#phone1").val(d.Phone);
+                $("#editDeptid").val(d.DeptId);
+                $("#editDeptname").val(d.DeptName);
+                $("#editcompany").val(d.CmpId);
 
 
                 $("#edit_department").modal("show");
@@ -249,35 +220,82 @@
         });
     });
 
-    $(".deleteDepartmentBtn").click(function () {
-        var id = $(this).data("id");
-        console.log(id);
-        //return;
-        alert(id);
+
+    function DeleteDepartment(Departmentid) {
+
+        $("#Designation_id").val(Departmentid);
+
+
+
+    }
+
+
+    var deletee = function () {
+
+        var idd = $("#Designation_id").val();
         $.ajax({
-            type: "GET",
-            url: "/Department/DelDepartment/?DesignationiD=" + id + "",
-            //data: "{DesignationiD:" + id + "}",
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (d) {
-                //var dd = JSON.parse(d).d;
-                //var department = JSON.parse(dd);
-                //console.log(department);
 
-                console.log(d);
+            type: "post",
+            url: "/Department/DeleteDepartment",
+            data: { Departmentid: idd },
+            success: function (result) {
 
-                $("#delete1").val(d.DeptId);
-                $("#username").val(d.UserName);
-                $("#password").val(d.Password);
-                $("#email").val(d.Email);
-                $("#DeptName").val(d.CmpName);
-                $("#phone").val(d.Phone);
-
-
-                $("#delete_department").modal("show");
-            }
+                $("Designation_id").val(null);
+                $("#delete_department").modal('hide');
+                window.location.reload();
+            },
         });
-    });
+
+    }
+
+    async function getSimilarUser(username) {
+        let response = await fetch(`https://happy-css.com/api/users?limit=1&name=${username}`)
+        return response.json()
+    }
+
+    async function isUserValid(target) {
+        let username = target.value
+        let users = await getSimilarUser(username)
+        if (users.length) {
+            let existingUsername = users[0].name
+            if (existingUsername == username) {
+                target.setCustomValidity(`The user "${username}" already exists`)
+                return false
+            }
+        }
+        target.setCustomValidity('')
+        return true
+    }
+
+    //$(".deleteDepartmentBtn").click(function () {
+    //    var id = $(this).data("id");
+    //    console.log(id);
+    //    //return;
+    //    alert(id);
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Department/DelDepartment/?DesignationiD=" + id + "",
+    //        //data: "{DesignationiD:" + id + "}",
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (d) {
+    //            //var dd = JSON.parse(d).d;
+    //            //var department = JSON.parse(dd);
+    //            //console.log(department);
+
+    //            console.log(d);
+
+    //            $("#delete1").val(d.DeptId);
+    //            $("#username").val(d.UserName);
+    //            $("#password").val(d.Password);
+    //            $("#email").val(d.Email);
+    //            $("#DeptName").val(d.CmpName);
+    //            $("#phone").val(d.Phone);
+
+
+    //            $("#delete_department").modal("show");
+    //        }
+    //    });
+    //});
 
 </script>

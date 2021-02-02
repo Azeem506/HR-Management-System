@@ -1,0 +1,49 @@
+﻿@model HR_Management_System.Models.Department
+@{
+    ViewBag.Title = "Company_Departments";
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
+}
+
+<h2>Company_Departments</h2>
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4 class="page-title">Department</h4>
+            </div>
+            <div class="col-sm-4 text-right m-b-30">
+                @*<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add New Department</a>*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <table class="table table-striped custom-table m-b-0 datatable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Department Name</th>
+                                <th>Company Name</th>
+                                @*<th class="text-right">Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.Department)
+                            {
+                                <tr>
+                                    <td>@item.DeptId</td>
+                                    <td>@item.DeptName</td>
+                                    <td>@Session["CompanyName"]</td>
+                                   
+                                </tr>
+}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

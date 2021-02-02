@@ -15,18 +15,17 @@ namespace HR_Management_System.Models
     public partial class Meeting
     {
         public int MeetingId { get; set; }
-        public string CmpName { get; set; }
-        public string DepName { get; set; }
-        public string CEO { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public string Date { get; set; }
         public Nullable<System.TimeSpan> Time { get; set; }
         public string Message { get; set; }
         public Nullable<int> CmpId { get; set; }
         public Nullable<int> DeptId { get; set; }
         public Nullable<int> UserId { get; set; }
+        public Nullable<int> EmpId { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual Department Department { get; set; }
+        public virtual Employee Employee { get; set; }
         public virtual User User { get; set; }
     }
 }

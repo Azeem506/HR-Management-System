@@ -272,7 +272,7 @@ namespace HR_Management_System.Models
             }
         }
 
-        public static void AddEmployee(String fname, String lname, String user, String password, String mail, String phone, String image, String cname,String dname)
+        public static void AddEmployee(String fname, String lname, String user, String password, String mail, String phone, String image, String cname,String dname,String role,String ishod)
         {
             String connString = @"Data Source=DESKTOP-8RFI652\SQLEXPRESS;Initial Catalog=Eazisols;Integrated Security=True";
             //int u = 1;
@@ -281,7 +281,7 @@ namespace HR_Management_System.Models
             {
                 conn.Open();
 
-                String sqlQuery = String.Format(@"INSERT INTO dbo.Employee(FName,LName,UserName, Password, Email, Phone,EmpImage,CmpName,DeptName) VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", fname, lname, user, password, mail, phone, image, cname, dname); ;
+                String sqlQuery = String.Format(@"INSERT INTO dbo.Employee(FName,LName,UserName, Password, Email, Phone,EmpImage,CmpName,DeptName,RoleType,IsHOD) VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')", fname, lname, user, password, mail, phone, image, cname, dname, role, ishod); ;
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
                 int rec = cmd.ExecuteNonQuery();
@@ -365,6 +365,22 @@ namespace HR_Management_System.Models
 
             }
 
+        }
+
+        public static void DeleteSalary(String id)
+        {
+            String connString = @"Data Source=DESKTOP-8RFI652\SQLEXPRESS;Initial Catalog=Eazisols;Integrated Security=True";
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                String sqlQuery = String.Format(@"Delete from dbo.Salary WHERE SalaryId='{0}'", id);
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                int rec = cmd.ExecuteNonQuery();
+
+
+            }
         }
     }
 }

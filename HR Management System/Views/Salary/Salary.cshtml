@@ -1,4 +1,8 @@
 ﻿@model HR_Management_System.Models.Salary
+@{ 
+    List<HR_Management_System.Models.SalaryViewmodell> list = (List<HR_Management_System.Models.SalaryViewmodell>)ViewBag.sal;
+}
+
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
@@ -6,7 +10,7 @@
                 <h4 class="page-title">Employee Salary</h4>
             </div>
             <div class="col-sm-7 col-7 text-right m-b-30">
-                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_salary"><i class="fa fa-plus"></i> Add Salary</a>
+                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_salary"> Add Salary</a>
             </div>
         </div>
 
@@ -16,48 +20,63 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th style="width:30%;">Employee</th>
-                                <th>Employee ID</th>
-                                <th>Email</th>
-                                <th>Joining Date</th>
+                                <th>Employee</th>
+                                <th>Company</th>
+                                <th>Department</th>
                                 <th>Role</th>
-                                <th>Salary</th>
+                                <th>Basic</th>
+                                <th>Medical</th>
+                                <th>Tax</th>
+                                <th>Total Salary</th>
+                                <th class="text-center">PaySlip</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach (var item in list) {
                             <tr>
+                                @*<td>
+                                    <img width="28" height="28" src="@item.E_Image" class="rounded-circle m-r-5" alt="">*@
+                                    @*<a href="@item.E_Image" class="avatar">@item.E_Image</a>*@
+                                    @*<h2><a href="profile.html">@item.E_Name<span></span></a></h2>
+                                </td>*@
+                                <td><img width="28" height="28" src="@item.E_Image" class="rounded-circle m-r-5" alt="">@item.E_Name</td>
+                                <td>@item.C_Name</td>
+                                <td>@item.D_Name</td>
+                                <td>@item.RType</td>
+                                <td>@item.Basic</td>
                                 <td>
-                                    <a href="profile.html" class="avatar">J</a>
-                                    <h2><a href="profile.html">John Doe <span>Web Designer</span></a></h2>
+                                    @item.Medical
+                                    @*<div class="dropdown">
+                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Designer <i class="caret"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Admin</a></li>
+                    <li><a href="#">Manager</a></li>
+                    <li><a href="#">HOD</a></li>
+                    <li><a href="#">Employee</a></li>
+                </ul>
+            </div>*@
                                 </td>
-                                <td>FT-0001</td>
-                                <td>johndoe@example.com</td>
-                                <td>1 Jan 2013</td>
+                                <td>@item.Tax</td>
+                                <td>@item.NetSalary</td>
                                 <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Designer <i class="caret"></i></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">Admin</a></li>
-                                            <li><a href="#">Manager</a></li>
-                                            <li><a href="#">HOD</a></li>
-                                            <li><a href="#">Employee</a></li>
-                                        </ul>
-                                    </div>
+                                    <a class="custom-badge status-green " href="@Url.Action("EmpSalarySlip", "Salary" , new { sal=item.SalaryId })" aria-expanded="false">
+                                        Payslip
+                                    </a>
                                 </td>
-                                <td>$59698</td>
-                                <td><a class="btn btn-xs btn-primary" href="salary-view.html">Generate Slip</a></td>
+                                @*<td><a class="btn btn-xs btn-primary" href="salary-view.html">Generate Slip</a></td>*@
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_salary" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#delete_salary" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li><a href="#" class="dropdown-item btnEditSalary" data-id="@item.SalaryId" data-toggle="modal" data-target="#edit_salary" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" class="dropdown-item " onclick="DeleteSalary(@item.SalaryId)" data-toggle="modal" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            @*<li><a href="#" class="btnDeleteSalary" data-id="@item.SalaryId" data-toggle="modal" data-target="#delete_salary" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>*@
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
-
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -74,108 +93,145 @@
                 <h4 class="modal-title">Add Employee Salary</h4>
             </div>
             <div class="modal-body">
+                @Html.Raw(ViewBag.insert)
                 @using (Html.BeginForm("Salary","Salary",FormMethod.Post))
                 {
     @Html.AntiForgeryToken()
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                @*@Html.DropDownList("OSRddl",null, "Please select Company")*@
-                                <label class="control-label">Company</label>
-                                @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", required = "required" })
-                                @*@Html.DropDownList("CmpName", null, htmlAttributes: new { @class = "form-control" })*@
-                                @*<select class="select" id="empcompany" name="empcompany">
-                                    @{ foreach (var item in ViewBag.cmp)
-                                        {*@
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @*@Html.DropDownList("OSRddl",null, "Please select Company")*@
+                            <label class="control-label">Company</label>
+                            @Html.DropDownListFor(m => m.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control",@id= "cmpiddddd", required = "required" })
+                            @*@Html.DropDownList("CmpName", null, htmlAttributes: new { @class = "form-control" })*@
+                            @*<select class="select" id="empcompany" name="empcompany">
+                @{ foreach (var item in ViewBag.cmp)
+                    {*@
                             @*<option value="@item.CmpName">@item.CmpName</option>*@
                             @*<option value="1">Delta Infotech</option>*@ @*} }*@
-                                @*</select>*@
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Department</label>
-                                @Html.DropDownListFor(item => @Model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control", required = "required" })
-                                @*<select class="select" id="empdept" name="empdept">
-                                           @{ foreach (var item in ViewBag.dept)
-                                               {
-                               <option value="@item.DeptName">@item.DeptName</option>
-        } }
-
-                                       </select>*@
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Employee</label>
-                                @Html.DropDownListFor(item => @Model.EmpId, ViewBag.emp as SelectList, "--- Select Employee ----", new { @class = "form-control", required = "required" })
-                                @*<select class="select" id="empsal" name="empsal">
-                                           @{ foreach (var item in ViewBag.emp)
-                                               {
-                               <option value="@item.LName">@item.LName</option>
-        } }
-
-                                       </select>*@
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="hidden" name="empid" id="empid" />
-                        </div>
-                        <div class="col-md-6">
-
-                            <h4 class="text-primary">Earnings</h4>
-
-                            <div class="form-group">
-                                <label>Basic</label>
-                                @Html.EditorFor(model => model.Basic, new { htmlAttributes = new { @class = "form-control" } })
-                                @*<input class="form-control" type="text" id="basicsal" name="basicsal">*@
-                            </div>
-
-                            <div class="form-group">
-                                <label>Allowance</label>
-                                @Html.EditorFor(model => model.Allowance, new { htmlAttributes = new { @class = "form-control" } })
-                                @*<input class="form-control" type="text" id="allowance" name="allowance">*@
-                            </div>
-                            <div class="form-group">
-                                <label>Medical  Allowance</label>
-                                @Html.EditorFor(model => model.Medical, new { htmlAttributes = new { @class = "form-control" } })
-                                @*<input class="form-control" type="text" id="medallowance" name="medallowance">*@
-                            </div>
-                            @*<div class="form-group">
-                                    <label>Others</label>
-                                    <input class="form-control" type="text" id="other1" name="other1">
-                                </div>*@
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="text-primary">Deductions</h4>
-
-                            <div class="form-group">
-                                <label>Tax</label>
-                                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control" } })
-                                @*<input class="form-control" type="text" id="tax" name="tax">*@
-                            </div>
-                            <div class="form-group">
-                                <label>Labour Welfare</label>
-                                @Html.EditorFor(model => model.LabourWelfare, new { htmlAttributes = new { @class = "form-control" } })
-                                @*<input class="form-control" type="text" id="labour" name="labour">*@
-                            </div>
-                            <div class="form-group">
-                                <label>Fund</label>
-                                @Html.EditorFor(model => model.Fund, new { htmlAttributes = new { @class = "form-control" } })
-                                @*<input class="form-control" type="text" id="fund" name="fund">*@
-                            </div>
-                            @*<div class="form-group">
-                                    <label>Others</label>
-                                    <input class="form-control" type="text" id="other2" name="other2">
-                                </div>*@
-                        </div>
-                        <div class="form-group">
-                            <label>Total Salary</label>
-                            @Html.EditorFor(model => model.NetSalary, new { htmlAttributes = new { @class = "form-control" } })
-                            @*<input class="form-control" type="text" id="totalsal" name="totalsal">*@
+                            @*</select>*@
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Department</label>
+                            @Html.DropDownListFor(model => model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control",@id= "USERIDf", required = "required" })
+                            @*<select class="select" id="empdept" name="empdept">
+                                                   @{ foreach (var item in ViewBag.dept)
+                                                       {
+                                       <option value="@item.DeptName">@item.DeptName</option>
+                } }
+
+                                               </select>*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Employee</label>
+                            @Html.DropDownListFor(model => model.EmpId, ViewBag.emp as SelectList, "--- Select Employee ----", new { @class = "form-control",@id="AddEmployee", required = "required" })
+                            @*<select class="select" id="empsal" name="empsal">
+                                                   @{ foreach (var item in ViewBag.emp)
+                                                       {
+                                       <option value="@item.LName">@item.LName</option>
+                } }
+
+                                               </select>*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @*<input  type="hidden" name="RoleId" />*@
+                            @*<label class="control-label">Role</label>
+                            @Html.DropDownListFor(model => model.RoleId, ViewBag.role as SelectList, "--- Select Role ----", new { @class = "form-control", required = "required" })*@
+                            @*<select class="select" id="empsal" name="empsal">
+                                                   @{ foreach (var item in ViewBag.emp)
+                                                       {
+                                       <option value="@item.LName">@item.LName</option>
+                } }
+
+                                               </select>*@
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @*<label>Date</label>*@
+                            <p style="margin-top:20px">
+                                @*<div class="cal-icon">*@
+                                @Html.LabelFor(model => model.Date)&nbsp;
+                                @*@Html.EditorFor(model => model.Date, "", new { @class = "form-control" })*@
+                                <input type="date" name="Date" class="form-control">
+                                @*</div>*@
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @*<label>Time</label>*@
+                            <p style="margin-top:20px">
+                                @*<div class="time-icon">*@
+                                @Html.LabelFor(model => model.Time)&nbsp;
+                                @*@Html.EditorFor(model => model.Time, "", new { @class = "form-control" })*@
+                                <input type="time" name="Time" class="form-control">
+                                @*</div>*@
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <h4 class="text-primary">Earnings</h4>
+
+                        <div class="form-group">
+                            <label>Basic</label>
+                            @Html.EditorFor(model => model.Basic, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="basicsal" name="basicsal">*@
+                        </div>
+
+                        <div class="form-group">
+                            <label>Allowance</label>
+                            @Html.EditorFor(model => model.Allowance, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="allowance" name="allowance">*@
+                        </div>
+                        <div class="form-group">
+                            <label>Medical  Allowance</label>
+                            @Html.EditorFor(model => model.Medical, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="medallowance" name="medallowance">*@
+                        </div>
+                        @*<div class="form-group">
+                <label>Others</label>
+                <input class="form-control" type="text" id="other1" name="other1">
+            </div>*@
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="text-primary">Deductions</h4>
+
+                        <div class="form-group">
+                            <label>Tax</label>
+                            @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="tax" name="tax">*@
+                        </div>
+                        <div class="form-group">
+                            <label>Labour Welfare</label>
+                            @Html.EditorFor(model => model.LabourWelfare, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="labour" name="labour">*@
+                        </div>
+                        <div class="form-group">
+                            <label>Fund</label>
+                            @Html.EditorFor(model => model.Fund, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="fund" name="fund">*@
+                        </div>
+                        @*<div class="form-group">
+                <label>Others</label>
+                <input class="form-control" type="text" id="other2" name="other2">
+            </div>*@
+                    </div>
+                    <div class="form-group">
+                        <label>Total Salary</label>
+                        @Html.EditorFor(model => model.NetSalary, new { htmlAttributes = new { @class = "form-control" } })
+                        @*<input class="form-control" type="text" id="totalsal" name="totalsal">*@
+                    </div>
+                </div>
                                     <div class="m-t-20 text-center">
                                         <button class="btn btn-primary">Create Salary</button>
                                     </div>}
@@ -188,60 +244,113 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <div class="modal-content modal-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Add Staff Salary</h4>
+                <h4 class="modal-title">Edit Staff Salary</h4>
             </div>
             <div class="modal-body">
-                <form>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 class="text-primary">Earnings</h4>
-
-                            <div class="form-group">
-                                <label>Basic</label>
-                                <input class="form-control" type="text">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Allowance</label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Medical  Allowance</label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Others</label>
-                                <input class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="text-primary">Deductions</h4>
-
-                            <div class="form-group">
-                                <label>Prof. Tax</label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Labour Welfare</label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Fund</label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Others</label>
-                                <input class="form-control" type="text">
-                            </div>
+                @Html.Raw(ViewBag.edit)
+                @using (Html.BeginForm("Edit", "Salary", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Company</label>
+                            @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", @id = "editcompany", required = "required" })
                         </div>
                     </div>
-                    <div class="m-t-20 text-center">
-                        <button class="btn btn-primary">Create Salary</button>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Department</label>
+                            @Html.DropDownListFor(item => @Model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control", @id = "USERIDfff", required = "required" })
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Employee</label>
+                            @Html.DropDownListFor(item => @Model.EmpId, ViewBag.emp as SelectList, "--- Select Employee ----", new { @class = "form-control", @id = "editemployee", required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @*<label class="control-label">Role</label>
+                            @Html.DropDownListFor(item => @Model.RoleId, ViewBag.role as SelectList, "--- Select Role ----", new { @class = "form-control", @id = "editrole", required = "required" })*@
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+                        <input type="hidden" name="empid1" id="empid1" />
+                    </div>*@
+
+
+
+                    <div class="col-md-6">
+                        <h4 class="text-primary">Earnings</h4>
+                        <div class="form-group">
+                            <label>Basic</label>
+                            @Html.EditorFor(model => model.Basic, new { htmlAttributes = new { @class = "form-control", @id = "editbasic" } })
+                            @*<input class="form-control" type="text">*@
+                        </div>
+
+                        <div class="form-group">
+                            <label>Allowance</label>
+                            @Html.EditorFor(model => model.Allowance, new { htmlAttributes = new { @class = "form-control", @id = "editallowance" } })
+                            @*<input class="form-control" type="text">*@
+                        </div>
+                        <div class="form-group">
+                            <label>Medical  Allowance</label>
+                            @Html.EditorFor(model => model.Medical, new { htmlAttributes = new { @class = "form-control", @id = "editmedical" } })
+                            @*<input class="form-control" type="text">*@
+                        </div>
+                        @*<div class="form-group">
+                <label>Others</label>
+                <input class="form-control" type="text">
+            </div>*@
+                        <div class="form-group">
+                            <label>Total</label>
+                            @Html.EditorFor(model => model.NetSalary, new { htmlAttributes = new { @class = "form-control", @id = "editnetsalary" } })
+                            @*<input class="form-control" type="text">*@
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="text-primary">Deductions</h4>
+
+                        <div class="form-group">
+                            <label>Prof. Tax</label>
+                            @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", @id = "edittax" } })
+                            @*<input class="form-control" type="text">*@
+                        </div>
+                        <div class="form-group">
+                            <label>Labour Welfare</label>
+                            @Html.EditorFor(model => model.LabourWelfare, new { htmlAttributes = new { @class = "form-control", @id = "editlabourwelfare" } })
+                            @*<input class="form-control" type="text">*@
+                        </div>
+                        <div class="form-group">
+                            <label>Fund</label>
+                            @Html.EditorFor(model => model.Fund, new { htmlAttributes = new { @class = "form-control", @id = "editfund" } })
+                            @*<input class="form-control" type="text">*@
+                        </div>
+                        <div class="form-group">
+                            @*<input type="text" id="SalaryEditHiddenid" />*@
+                           
+                            @Html.EditorFor(model => model.SalaryId, new { htmlAttributes = new { @class = "form-control", @id = "editSlaryid"} })
+
+                            @*<input class="form-control" type="text">*@
+                        </div>
+                        @*<div class="form-group">*@
+                        @*<label>Fund</label>*@
+                        @*@Html.EditorFor(model => model.SalaryId, new { htmlAttributes = new { @class = "form-control", @id = "editSalary" } })*@
+                        @*<input class="form-control" type="text">*@
+                        <!--</div>-->
+                        @*<div class="form-group">
+            <label>Others</label>
+            <input class="form-control" type="text">
+        </div>*@
+                    </div>
+                </div>
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary">Create Salary</button>
+                        </div> }
+                    </div>
+                </div>
     </div>
 </div>
 <div id="delete_salary" class="modal custom-modal fade" role="dialog">
@@ -250,15 +359,232 @@
             <div class="modal-header">
                 <h4 class="modal-title">Delete Salary</h4>
             </div>
-            <form>
-                <div class="modal-body card-box">
-                    <p>Are you sure want to delete this?</p>
-                    <div class="m-t-20 text-left">
-                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+           
+
+            <div class="modal-body card-box">
+                @Html.Raw(ViewBag.delete)
+                @using (Html.BeginForm("Delete", "Salary", FormMethod.Post))
+                {
+            @Html.AntiForgeryToken()
+
+                            <p>Are you sure want to delete this?</p>
+                            <div class="col-md-6">
+                                @*<input type="text" name="empid2" id="empid2" />*@
+                                <input type="text" id="Designation_id" />
+                            </div>
+                            <div class="m-t-20 text-left">
+                                <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                                <button type="submit" onclick="deletee()" class="btn btn-danger">Delete</button>
+                                @*<button type="submit" class="btn btn-danger">Delete</button>*@
+                            </div>}
+                                                                        </div> 
+                                                    </div>
     </div>
 </div>
+
+@*<script src="~/Scripts/jquery-3.2.1.min.js"></script>*@
+<script type="text/javascript">
+    function DeleteSalary(Salaryid) {
+
+        $("#Designation_id").val(Salaryid);
+
+        
+
+    }
+
+    // For Department Load in Add Salary Case
+    $(document).ready(function () {
+        var deptid;
+        $("#cmpiddddd").change(function () {
+            $.get("/Salary/Getdept", { CompanyIDf: $("#cmpiddddd").val() }, function (data) {
+                $("#USERIDf").empty();
+                $.each(data, function (index, row) {
+                    $("#USERIDf").append("<option value='" + row.DeptId + "'>" + row.DeptName + "</option>")
+                    deptid = $("#USERIDf").val();
+                });
+                $.get("/Salary/GetEmp", { DepartmentIDf: deptid }, function (data) {
+                    $("#AddEmployee").empty();
+                    $.each(data, function (index, row) {
+                        $("#AddEmployee").append("<option value='" + row.EmpId + "'>" + row.LName + "</option>")
+                    });
+                });
+            });
+            
+        })
+    });
+
+
+    // For Employee Load in Add Salary Case
+    $(document).ready(function () {
+        $("#USERIDf").change(function () {
+            $.get("/Salary/GetEmp", { DepartmentIDf: $("#USERIDf").val() }, function (data) {
+                $("#AddEmployee").empty();
+                $.each(data, function (index, row) {
+                    $("#AddEmployee").append("<option value='" + row.EmpId + "'>" + row.LName + "</option>")
+                });
+            });
+        })
+    });
+
+
+
+
+
+    // For Department Load in Edit Salary Case
+    $(document).ready(function () {
+        var depteditid;
+        $("#editcompany").change(function () {
+
+            $.get("/Salary/Getdept", { CompanyIDf: $("#editcompany").val() }, function (data) {
+                $("#USERIDfff").empty();
+                $.each(data, function (index, row) {
+                    $("#USERIDfff").append("<option value='" + row.DeptId + "'>" + row.DeptName + "</option>")
+                    depteditid = $("#USERIDfff").val();
+                });
+                $.get("/Salary/GetEmp", { DepartmentIDf: depteditid }, function (data) {
+                    $("#editemployee").empty();
+                    $.each(data, function (index, row) {
+                        $("#editemployee").append("<option value='" + row.EmpId + "'>" + row.LName + "</option>")
+                    });
+                });
+            });
+        })
+    });
+
+
+    // For Employee Load in Edit Salary Case
+    $(document).ready(function () {
+        $("#USERIDfff").change(function () {
+
+            $.get("/Salary/GetEmp", { DepartmentIDf: $("#USERIDfff").val() }, function (data) {
+                $("#editemployee").empty();
+                $.each(data, function (index, row) {
+                    $("#editemployee").append("<option value='" + row.EmpId + "'>" + row.LName + "</option>")
+                });
+            });
+        })
+    });
+
+
+
+
+
+
+    $(".btnEditSalary").click(function () {
+            //alert('test');
+        var id = $(this).data("id");
+        console.log(id);
+        alert(id);
+        //return;
+        $.ajax({
+            type: "GET",
+            url: "/Salary/Edit/?id=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+            //var dd = JSON.parse(d).d;
+            //var department = JSON.parse(dd);
+            //console.log(department);
+
+            console.log(d);
+
+
+                $("#editSlaryid").val(id);
+                $("#editbasic").val(d.Basic);
+                $("#editallowance").val(d.Allowance);
+                $("#editmedical").val(d.Medical);
+                $("#editnetsalary").val(d.NetSalary);
+                $("#edittax").val(d.Tax);
+                $("#editlabourwelfare").val(d.LabourWelfare);
+                $("#editfund").val(d.Fund);
+                $("#editcompany").val(d.CmpId);
+                $("#USERIDfff").val(d.DeptId);
+                $("#editemployee").val(d.EmpId);
+                $("#editrole").val(d.RoleId);
+
+
+
+
+                //Load Data accordin to selected item
+                //$("#edit_salary").modal("show");
+                //$.get("/Salary/Getdept", { CompanyIDf: $("#editcompany").val() }, function (data) {
+                //    $("#USERIDfff").empty();
+                //    $.each(data, function (index, row) {
+                //        $("#USERIDfff").append("<option value='" + row.DeptId + "'>" + row.DeptName + "</option>")
+                //    });
+
+
+                //});
+                //$.get("/Salary/GetEmp", { DepartmentIDf: $("#USERIDfff").val() }, function (data) {
+                //    $("#editemployee").empty();
+                //    $.each(data, function (index, row) {
+                //        $("#editemployee").append("<option value='" + row.EmpId + "'>" + row.LName + "</option>")
+                //    });
+                //});
+            }
+        });
+    });
+
+
+
+
+    //var ConfirmDelet = function (SalaryId) {
+    //    $("#SalaryId").val(SalaryId);
+    //};
+
+    var deletee = function () {
+
+        var idd = $("#Designation_id").val();
+        $.ajax({
+
+            type: "post",
+            url: "/Salary/delete",
+            data: { Salaryid: idd },
+            success: function (result) {
+
+                $("Designation_id").val(null);
+                $("#delete_salary").modal('hide');
+                window.location.href = "/Salary/Salary";
+            },
+        });
+
+    }
+
+    //$(".btnDeleteSalary").click(function () {
+    //    var id = $(this).data("id");
+    //    console.log(id);
+    //    //return;
+    //    alert(id);
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Salary/Delete/?id=" + id + "",
+    //        //data: "{DesignationiD:" + id + "}",
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (d) {
+    //            //var dd = JSON.parse(d).d;
+    //            //var department = JSON.parse(dd);
+    //            //console.log(department);
+
+    //            console.log(d);
+
+    //            $("#empid2").val(d.SalaryId);
+    //            $("#editSalary").val(d.SalaryId);
+    //            $("#editbasic").val(d.Basic);
+    //            $("#editallowance").val(d.Allowance);
+    //            $("#editmedical").val(d.Medical);
+    //            $("#editnetsalary").val(d.NetSalary);
+    //            $("#edittax").val(d.Tax);
+    //            $("#editlabourwelfare").val(d.LabourWelfare);
+    //            $("#editfund").val(d.Fund);
+    //            $("#editcompany").val(d.CmpId);
+    //            $("#editdepartment").val(d.DeptId);
+    //            $("#editemployee").val(d.EmpId);
+
+
+    //            $("#delete_salary").modal("show");
+    //        }
+    //    });
+    //});
+</script>

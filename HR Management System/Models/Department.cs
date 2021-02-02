@@ -19,18 +19,12 @@ namespace HR_Management_System.Models
         {
             this.Meetings = new HashSet<Meeting>();
             this.Salaries = new HashSet<Salary>();
-            this.Employees = new HashSet<Employee>();
         }
     
         public int DeptId { get; set; }
         public string DeptName { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string UserName { get; set; }
         public Nullable<int> CmpId { get; set; }
         public Nullable<int> UserId { get; set; }
-        public string CmpName { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual User User { get; set; }
@@ -38,7 +32,5 @@ namespace HR_Management_System.Models
         public virtual ICollection<Meeting> Meetings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Salary> Salaries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

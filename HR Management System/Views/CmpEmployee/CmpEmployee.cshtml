@@ -1,0 +1,417 @@
+﻿@model HR_Management_System.Models.Employee
+@{
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-xs-3">
+                <h4 class="page-title">Employee</h4>
+            </div>
+            <div class="col-sm-8 col-xs-9 text-right m-b-20">
+                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_employee"> Add Employee</a>
+                <div class="view-icons">
+                    <a href="employees.html" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                    <a href="employees-list.html" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row staff-grid-row">
+            @foreach (var item in ViewBag.Employeees)
+            {
+                <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
+                    <div class="profile-widget">
+                        <div class="profile-img">
+                            <a href="@Url.Action("CmpEmpProfile", "CmpEmployee", new { id = item.EmpId })" class="avatar"><img src="@item.EmpImage" style="width:150px; height:100px;" /></a>
+                        </div>
+                        <div class="dropdown profile-action">
+
+                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="#" class="dropdown-item editEmployeeBtn" data-id="@item.EmpId" data-toggle="modal" data-target="#edit_employee" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+
+                                <a class="dropdown-item" onclick="DeleteEmployee(@item.EmpId)" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+
+                            </ul>
+                        </div>
+                        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("CmpEmpProfile", "CmpEmployee", new { id = item.EmpId })">@item.FName</a></h4>
+                        <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("CmpEmpProfile", "CmpEmployee", new { id = item.EmpId })">@item.LName</a></h5>
+                        <div class="small text-muted">@item.R_Type</div>
+
+                        <a href="@Url.Action("CmpEmpProfile", "CmpEmployee", new { id = item.EmpId })" class="btn btn-default btn-sm m-t-10">View Profile</a>
+
+
+                    </div>
+                </div>}
+        </div>
+    </div>
+
+</div>
+<div id="add_employee" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Employee</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("CmpEmployee", "CmpEmployee", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken() @*<form action="~/Employee/AddEmployee" method="post" enctype="multipart/form-data">*@
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.FName, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="empfirstname" name="empfirstname">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name</label>
+                            @Html.EditorFor(model => model.LName, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="emplastname" name="emplastname">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Username <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="empusername" name="empusername">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Email <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="email" id="empemail" name="empemail">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Password</label>
+                            @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <input class="form-control" type="password" id="emppassword" name="Password">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Confirm Password</label>
+
+                            <input class="form-control" type="password" id="empcpassword" name="empcpassword">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @*<label>Date</label>*@
+                            <p style="margin-top:20px">
+                                @*<div class="cal-icon">*@
+                                @Html.LabelFor(model => model.JoiningDate)&nbsp;
+                                <input type="date" name="JoiningDate" class="form-control">
+                                @*@Html.EditorFor(model => model.JoiningDate, "", new { @class = "form-control" })*@
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @*<label class="control-label">Employee ID <span class="text-danger">*</span></label>*@
+                            @Html.HiddenFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input type="text" class="form-control" id="empid" name="empid">*@
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Phone </label>
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @*<input class="form-control" type="text" id="empphone" name="empphone">*@
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <label class="control-label" >Employee Address</label>
+
+                            @Html.EditorFor(model => model.EmpAddress, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                            @*@Html.EditorFor(model => model.EmpImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <input class="form-control floating" type="file" id="empimage" name="empimage">
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="margin-top:30px">
+                        <div class="form-group">
+                            <select class="form-control" id="StudentGender" name="Gender">
+                                <option>Select Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    @*<div class="col-sm-6">
+            <div class="form-group">
+
+                <label class="control-label">Company</label>
+                @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", required = "required" })
+
+            </div>
+        </div>*@
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Department</label>
+
+                            @Html.DropDownListFor(item => @Model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control", required = "required" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Role</label>
+                            @Html.DropDownListFor(item => @Model.RoleId, ViewBag.role as SelectList, "--- Select Role ----", new { @class = "form-control", required = "required" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Check if HOD</label>
+                            @Html.CheckBoxFor(model => model.IsHOD, new { @id = "IsHod", @class = "IsHod" })
+                        </div>
+                    </div>
+                </div>
+
+
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary">Create Employee</button>
+                    </div> @*</form>*@}
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="edit_employee" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Employee</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditCmpEmployee", "CmpEmployee", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken() @*<form action="~/Employee/EditEmployee" method="post">*@
+                <div class="row">
+
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.FName, new { htmlAttributes = new { @class = "form-control", @id = "editfname" } })
+                            @*<input class="form-control" type="text" id="editfname" name="editfname">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name</label>
+                            @Html.EditorFor(model => model.LName, new { htmlAttributes = new { @class = "form-control", @id = "editlname" } })
+                            @*<input class="form-control" type="text" id="editlname" name="editlname">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Username <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "editusername" } })
+                            @*<input class="form-control" type="text" id="editusername" name="editusername">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Email <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "editemail" } })
+                            @*<input class="form-control" type="email" id="editemail" name="editemail">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Password</label>
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "editpass" } })
+                            @*<input class="form-control" type="password" id="editpass" name="editpass">*@
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+            <div class="form-group">
+                <p style="margin-top:20px">
+                    @Html.LabelFor(model => model.JoiningDate)&nbsp;
+                    <input type="date" name="JoiningDate" id="editJoiningDate" class="form-control">
+                </p>
+            </div>
+        </div>*@
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Phone </label>
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @id = "editphone" } })
+                            @*<input class="form-control" type="text" id="editphone" name="editphone">*@
+                        </div>
+                    </div>
+
+                    @Html.EditorFor(model => model.EmpAddress, new { htmlAttributes = new { @class = "form-control", @Type = "hidden", @id = "editEmpAddress" } })
+                    <input type="hidden" id="editDate" name="JoiningDate" class="form-control">
+                    @Html.CheckBoxFor(model => model.IsHOD, new { @id = "IsHod", @Type = "hidden", @class = "IsHod" })
+                    <input class="form-control" type="hidden" name="EmpId" id="editEmpid" />
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                            @*@Html.EditorFor(model => model.EmpImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <input class="form-control floating" type="file" id="empimage1" name="empimage1">
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" id="editcompany" name="CmpId" />
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Department</label>
+                            @Html.DropDownListFor(item => @Model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control", @id = "editdepartment", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Role</label>
+                            @Html.DropDownListFor(item => @Model.RoleId, ViewBag.role as SelectList, "--- Select Role ----", new { @class = "form-control", @id = "editrole", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Gender</label>
+                            <select class="form-control Gender" id="Gender" name="Gender">
+                                <option>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary">Save Changes</button>
+                    </div> @*</form>*@}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delete_employee" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Employee</h4>
+            </div>
+            @Html.Raw(ViewBag.delete)
+            @using (Html.BeginForm("DeleteCmpEmployee", "CmpEmployee", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <p>Are you sure want to delete this?</p>
+                <div class="col-md-6">
+                    @*<input type="text" name="empid2" id="empid2" />*@
+                    <input type="text" id="Designation_id" />
+                </div>
+                <div class="m-t-20 text-left">
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    <button type="submit" onclick="deletee()" class="btn btn-danger">Delete</button>
+                    @*<button type="submit" class="btn btn-danger">Delete</button>*@
+                </div>}
+
+
+        </div>
+    </div>
+</div>
+<script>
+    $(".editEmployeeBtn").click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        //return;
+        $.ajax({
+            type: "GET",
+            url: "/CmpEmployee/EditCmpEmployee1/?DesignationiD=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+
+
+                console.log(d);
+
+                $("#editEmpid").val(d.EmpId);
+                $("#editfname").val(d.FName);
+                $("#editlname").val(d.LName);
+                $("#editusername").val(d.UserName);
+                $("#editpass").val(d.Password);
+                $("editJoiningDate").val(d.JoiningDate);
+                $("#editemail").val(d.Email);
+                $("#editphone").val(d.Phone);
+                $("#editEmpAddress").val(d.EmpAddress);
+                $("#editDate").val(d.JoiningDate);
+                $("#IsHod").val(d.IsHOD);
+                $("#Gender").val(d.Gender);
+                $(".Gender").val(d.Gender);
+                $("#editcompany").val(d.CmpId);
+                $("#editdepartment").val(d.DeptId);
+                $("#editrole").val(d.RoleId);
+
+                $("#edit_employee").modal("show");
+            }
+        });
+    });
+
+    function DeleteEmployee(Employeeid) {
+
+        $("#Designation_id").val(Employeeid);
+
+
+
+    }
+
+
+    var deletee = function () {
+
+        var idd = $("#Designation_id").val();
+        $.ajax({
+
+            type: "post",
+            url: "/CmpEmployee/DeleteCmpEmployee",
+            data: { Employeeid: idd },
+            success: function (result) {
+
+                $("Designation_id").val(null);
+                $("#delete_employee").modal('hide');
+                window.location.href = "/CmpEmployee/CmpEmployee";
+            },
+        });
+
+    }
+
+
+</script>

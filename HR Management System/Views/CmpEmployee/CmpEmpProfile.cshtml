@@ -1,0 +1,84 @@
+﻿@model  HR_Management_System.Models.Employee
+@{
+    ViewBag.Title = "CmpEmpProfile";
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
+}
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/css/select2.min.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<a href="~/fonts/fontawesome-webfont3e6e.eot">~/fonts/fontawesome-webfont3e6e.eot</a>
+<a href="~/fonts/fontawesome-webfont3e6e.html">~/fonts/fontawesome-webfont3e6e.html</a>
+<a href="~/fonts/fontawesome-webfont3e6e.woff">~/fonts/fontawesome-webfont3e6e.woff</a>
+<a href="~/fonts/fontawesome-webfontd41d.eot">~/fonts/fontawesome-webfontd41d.eot</a>
+
+
+<h2>CmpEmpProfile</h2>
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4 class="page-title">My Profile</h4>
+            </div>
+
+            @*<div class="col-sm-4 text-right m-b-30">
+                    <a href="edit-profile.html" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Edit Profile</a>
+                </div>*@
+        </div>
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                <a class="avatar"><img src="@Model.EmpImage" style="width:150px; height:150px;" /></a>
+                            </div>
+                        </div>
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name m-t-0 m-b-0">@Model.LName</h3>
+                                        <small class="text-muted">@Model.Role.RoleType</small>
+                                        <div class="staff-id">Employee ID :@Model.EmpId</div>
+                                        @*<div class="staff-msg"><a href="chat.html" class="btn btn-custom">Send Message</a></div>*@
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <span class="title">Phone:</span>
+                                            <span class="text"><a href="#">@Model.Phone</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Email:</span>
+                                            <span class="text"><a href="#">@Model.Email</a></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Joining Date</span>
+                                            <span class="text">@Model.JoiningDate</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Address:</span>
+                                            <span class="text">@Model.EmpAddress</span>
+                                        </li>
+                                        <li>
+
+                                            <span class="title">Gender:</span>
+                                            <span class="text">@Model.Gender</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

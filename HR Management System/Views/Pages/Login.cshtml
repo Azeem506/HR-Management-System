@@ -53,38 +53,49 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <div class="panel-body">
+                                @using (Html.BeginForm("Login", "Pages", FormMethod.Post))
+                                {
+                            @Html.AntiForgeryToken()
+                            @*<form action="/Pages/Login" method="POST">*@
+                                <h1>Sign In</h1>
 
-                                <form action="/Pages/Login" method="POST">
-                                    <h1>Sign In</h1>
+                                @*<div class="form-group">
+            <div class="input-group">
 
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
-                                            <input id="txtLogin" name="txtLogin" placeholder="User Name" class="form-control" type="text" required>
-                                        </div>
+                <input type="text" name="Uid" id="Uid" />
+            </div>
+        </div>*@
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
+                                        @Html.TextBox("Login", "", new { @class = "form-control floating" })
+                                        @*<input id="txtLogin" name="txtLogin" placeholder="User Name" class="form-control" type="text" required>*@
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
-                                            <input id="pswd" name="pswd" placeholder="Password" class="form-control" type="password" required>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
+                                        @Html.Password("Passwordd", "", new { @class = "form-control floating" })
+                                        @*<input id="pswd" name="pswd" placeholder="Password" class="form-control" type="password" required>*@
                                     </div>
-                                    <label class="radio-inline"><input type="radio" name="optradio">Company</label>
-                                    <label class="radio-inline"><input type="radio" name="optradio">Department</label>
-                                    <label class="radio-inline"><input type="radio" name="optradio">Employee</label>
+                                </div>
+                                @*<label class="radio-inline"><input type="radio" name="optradio1" id="optradio1">Company</label>
+                                <label class="radio-inline"><input type="radio" name="optradio2" id="optradio2">Department</label>
+                                <label class="radio-inline"><input type="radio" name="optradio3" id="optradio3">Employee</label>*@
 
 
 
 
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <a href='@Url.Content("~/Pages/ForgetPass")' style="color:blue">Forget Password?</a>
-                                        </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <a href='@Url.Content("~/Pages/ForgetPass")' style="color:blue">Forget Password?</a>
                                     </div>
-                                    <input type="submit" value="Login" name="btnSubmit" />
-
-                                </form>
-
+                                </div>
+                                <input type="submit" value="Login" name="btnSubmit" />
+                                
+                                    
+                            @*</form>*@
+                                }
                             </div>
                         </div>
                     </div>
@@ -97,6 +108,7 @@
 </body>
 
 </html>
+
 
 
 

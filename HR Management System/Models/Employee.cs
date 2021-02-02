@@ -17,6 +17,7 @@ namespace HR_Management_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
+            this.Meetings = new HashSet<Meeting>();
             this.Salaries = new HashSet<Salary>();
         }
     
@@ -33,14 +34,15 @@ namespace HR_Management_System.Models
         public Nullable<int> UserId { get; set; }
         public Nullable<int> SalaryId { get; set; }
         public string EmpImage { get; set; }
-        public string CmpName { get; set; }
-        public string DeptName { get; set; }
+        public bool IsHOD { get; set; }
+        public string JoiningDate { get; set; }
+        public string EmpAddress { get; set; }
+        public string Gender { get; set; }
     
-        public virtual Company Company { get; set; }
-        public virtual Department Department { get; set; }
         public virtual Role Role { get; set; }
         public virtual Salary Salary { get; set; }
-        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Meeting> Meetings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Salary> Salaries { get; set; }
     }

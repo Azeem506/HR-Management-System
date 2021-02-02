@@ -130,6 +130,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CmpDeptController.cs" />
+    <Compile Include="Controllers\CmpEmployeeController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -150,13 +152,16 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DepartmentDTO.cs" />
+    <Compile Include="Models\DepartmentViewModel.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EmployeeDTO.cs" />
+    <Compile Include="Models\EmployeeViewModel.cs" />
     <Compile Include="Models\Meeting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MeetingViewModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -178,6 +183,7 @@
     <Compile Include="Models\Salary.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SalaryViewmodell.cs" />
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -498,10 +504,29 @@
     <Content Include="Views\Employee\AddEmployee.cshtml" />
     <Content Include="Views\Employee\GetCompany.cshtml" />
     <Content Include="Views\Salary\AddSalary1.cshtml" />
+    <Content Include="Views\Salary\Edit.cshtml" />
+    <Content Include="Views\Salary\Delete.cshtml" />
+    <Content Include="Views\Employee\EditEmployee1.cshtml" />
+    <Content Include="Views\Salary\EmpSalarySlip.cshtml" />
+    <Content Include="Views\Company\Company_Departments.cshtml" />
+    <Content Include="Views\CmpDept\Department.cshtml" />
+    <Content Include="Views\CmpDept\Company_Departments.cshtml" />
+    <Content Include="Views\Shared\_CompanyLayout.cshtml" />
+    <Content Include="Views\Company\Company_Profile.cshtml" />
+    <Content Include="Views\CmpEmployee\CmpEmployee.cshtml" />
+    <Content Include="Views\CmpEmployee\CmpEmpSalary.cshtml" />
+    <Content Include="Views\CmpEmployee\CmpEmpProfile.cshtml" />
+    <Content Include="Views\CmpEmployee\CmpMeeting.cshtml" />
+    <Content Include="Views\CmpEmployee\CmpEmpSalarySlip.cshtml" />
+    <Content Include="Views\Shared\_EmployeeLayout.cshtml" />
+    <Content Include="Views\Employee\Emp_Profile.cshtml" />
+    <Content Include="Views\Employee\EmpSalarySlip.cshtml" />
+    <Content Include="Views\Employee\Attendance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\blog\" />
+    <Folder Include="Views\Meeting\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

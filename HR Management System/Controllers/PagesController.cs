@@ -6,11 +6,13 @@ using System.Web.Mvc;
 using System.Net;
 using System.Net.Mail;
 using HR_Management_System.Models;
+using System.Web.Helpers;
 
 namespace HR_Management_System.Controllers
 {
     public class PagesController : Controller
     {
+        EazisolsEntities4 db = new EazisolsEntities4();
         // GET: Pages
         public ActionResult Index()
         {
@@ -30,35 +32,105 @@ namespace HR_Management_System.Controllers
             return View();
 
         }
-        
-        
 
-        [ActionName("Login")]
+
+
+        //[ActionName("Login")]
+        //[HttpPost]
+        //public ActionResult Login(UserDTO user)
+        //{
+        //    string login = Request["txtLogin"];
+        //    string password = Request["pswd"];
+        //    bool a = DBManager.Validate(login, password);
+
+        //    Session["login"] = login;
+
+        //    if (a == true)
+        //    {
+        //        ViewBag.alert = "Valid User";
+        //        return Redirect("~/Home/Index");
+
+        //    }
+
+        //    ViewBag.alert = "InValid User";
+
+        //    return View();
+
+        //}
         [HttpPost]
-        public ActionResult Login(UserDTO user)
+        public ActionResult Login(string Login, string Passwordd)
         {
-            string login = Request["txtLogin"];
-            string password = Request["pswd"];
-            bool a = DBManager.Validate(login, password);
-            Session["login"] = login;
-
-            if (a == true)
+            try
             {
-                ViewBag.alert = "Valid User";
-                return Redirect("~/Home/Index");
+               
+
+                var loginn = db.Users.Where(x => x.Login == Login && x.Password == Passwordd).SingleOrDefault();
+                var Company_Login = db.Companies.Where(x => x.Email == Login || x.UserName == Login && x.Password == Passwordd).SingleOrDefault();
+              //  var Department_Login = db.Departments.Where(x => x.UserName == Login && x.Password == Passwordd).SingleOrDefault();
+                var Employee_Login = db.Employees.Where(x => x.Email == Login || x.UserName == Login && x.Password == Passwordd).SingleOrDefault();
+
+                if (loginn != null)
+                {
+                    Session["Userid"] = loginn.UserId.ToString();
+                    Session["Userlogin"] = loginn.Login.ToString();
+                    Session["Userpass"] = loginn.Password.ToString();
+                    return RedirectToAction("Index","Home");
+                }
+                else if (Company_Login != null)
+                {
+                    Session["CompanyId"] = Company_Login.CmpId.ToString();
+                    Session["CompanyName"] = Company_Login.CmpName.ToString();
+                    Session["CmpUsername"] = Company_Login.UserName.ToString();
+                    Session["CmpPassword"] = Company_Login.Password.ToString();
+                    Session["CmpEmail"] = Company_Login.Email.ToString();
+
+                    return RedirectToAction("Company_Profile", "Company");
+                }
+                //else if (Department_Login != null)
+                //{
+                
+                //    Session["DepartmentId"] = Department_Login.DeptId.ToString();
+                //    Session["DepartmentName"] = Department_Login.DeptName.ToString();
+                //    Session["DeptUsername"] = Department_Login.UserName.ToString();
+
+                //    return Redirect("~/Department/Department");
+
+                //}
+                else if (Employee_Login != null)
+                {
+                    Session["EmployeeId"] = Employee_Login.EmpId.ToString();
+                    Session["EmployeeName"] = Employee_Login.LName.ToString();
+                    Session["EmpUsername"] = Employee_Login.UserName.ToString();
+                    Session["EmpEmail"] = Employee_Login.Email.ToString();
+                    Session["EmpPassword"] = Employee_Login.Password.ToString();
+
+                    return RedirectToAction("Emp_Profile", "Employee");
+
+                }
+
+                else
+                {
+
+                    ViewBag.incorrect = "Usrname or Password are not valid";
+                    return View();
+                }
+            }
+            catch (Exception)
+            {
+
+                ViewBag.incorrect = "Something Invalid";
+                //return View();
 
             }
 
-            ViewBag.alert = "InValid User";
-
-            return View();
 
 
-
+            return RedirectToAction("Index", "Home");
         }
 
+
         [HttpGet]
-        public ActionResult SignUp()
+            public ActionResult SignUp()
         {
             return View();
         }

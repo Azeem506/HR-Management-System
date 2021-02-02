@@ -1,0 +1,369 @@
+﻿@model HR_Management_System.Models.Meeting
+@{
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
+    ViewBag.Title = "CmpMeeting";
+}
+
+<h2>CmpMeeting</h2>
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-4 col-3">
+                <h4 class="page-title">Meeting Schedualer</h4>
+            </div>
+            <div class="col-sm-8 col-9 text-right m-b-20">
+                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_employee"> Add Meeting</a>
+                @*<a href="~/Company/AddMeeting" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Meeting</a>*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table">
+                        <thead>
+                            <tr>
+                                <th>Meeting ID</th>
+                                <th>Company Name</th>
+                                <th>Department</th>
+                                <th>Meeting President</th>
+                                <th>Meeting Date</th>
+                                <th>Meeting Time</th>
+                                @*<th>Status</th>*@
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.Meeting)
+                            {
+                                if (item.CmpId == Convert.ToInt32(Session["CompanyId"].ToString()))
+                                {
+                                <tr>
+                                    <td>@item.MeetingId</td>
+                                    <td>@item.C_Name</td>
+                                    <td>@item.D_Name</td>
+                                    <td><img width="28" height="28" src="@item.E_Image" class="rounded-circle m-r-5" alt="">@item.E_Name</td>
+                                    <td>@item.Date</td>
+                                    <td>@item.Time</td>
+                                    @*<td><span class="custom-badge status-red">Inactive</span></td>*@
+                                    <td class="text-right">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                @*<a href="#" class="editEmployeeBtn" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-trash-o m-r-5"></i> Edit</a>*@
+
+
+
+                                                <li><a class="dropdown-item btnEditMeeting" id="" data-id="@item.MeetingId" href="#" data-toggle="modal" data-target="#edit_meeting"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                                <li><a class="dropdown-item" onclick="DeleteMeeting(@item.MeetingId)" href="#" data-toggle="modal" data-target="#delete_meeting"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="add_employee" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Meeting</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddCmpMeeting", "CmpEmployee", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @*<form>*@
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Department</label>
+                                @Html.DropDownListFor(model => model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control",@id= "USERIDf", required = "required" })
+                                @*<input class="form-control" type="text" placeholder="Department Name" />*@
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Meeting President</label>
+                                @Html.DropDownListFor(model => model.EmpId, ViewBag.emp as SelectList, "--- Select Meeting President----", new { @class = "form-control",@id= "AddEmployee", required = "required" })
+                                @*<input class="form-control" type="text" placeholder="Meeting President" />*@
+
+                            </div>
+                        </div>
+                    </div>
+                        
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @*<label>Date</label>*@
+                                    <p style="margin-top:20px">
+                                        @*<div class="cal-icon">*@
+                                        @Html.LabelFor(model => model.Date)&nbsp;
+                                        @*@Html.EditorFor(model => model.Date, "", new { @class = "form-control",@Type="Date" })*@
+                                        <input name="Date" placeholder="Enter Date" type="date" class="form-control" />
+                                        @*<input type="text" class="form-control datetimepicker">*@
+                                        @*</div>*@
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @*<label>Time</label>*@
+                                    <p style="margin-top:20px">
+                                        @*<div class="time-icon">*@
+                                        @Html.LabelFor(model => model.Time)&nbsp;
+                                        <input name="Time" placeholder="Enter Time" type="time" class="form-control" />
+                                        @*@Html.EditorFor(model => model.Time, "", new { @class = "form-control" })*@
+                                        @*<input type="text" class="form-control" id="datetimepicker3">*@
+                                        @*</div>*@
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="CmpId" />
+                        <div class="form-group" style="margin-top:25px">
+                            <label>Message</label>
+                            @Html.LabelFor(model => model.Message)&nbsp;@Html.TextAreaFor(model => model.Message, new { @class = "form-control" })
+
+                            @*<textarea cols="30" rows="4" class="form-control"></textarea>*@
+                        </div>
+                        
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary submit-btn">Create Meeting</button>
+                        </div>
+                        @*</form>*@
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit_meeting" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Meeting</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("EditCmpMeeting", "CmpEmployee", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Department</label>
+                                        @Html.DropDownListFor(item => @Model.DeptId, ViewBag.dept as SelectList, "--- Select Department ----", new { @class = "form-control", @id = "editmeetingdepartment", required = "required" })
+                                        @*<input class="form-control" type="text" placeholder="Department Name" />*@
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Meeting President</label>
+                                        @Html.DropDownListFor(item => @Model.EmpId, ViewBag.emp as SelectList, "--- Select President ----", new { @class = "form-control", @id = "editmeetingemployee", required = "required" })
+                                        @*<input class="form-control" type="text" placeholder="Meeting President" />*@
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            @Html.EditorFor(model => model.MeetingId, new { htmlAttributes = new { @class = "form-control", @id = "editmeetingid", Type = "hidden" } })
+
+                                
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @*<label>Date</label>*@
+                                        <p style="margin-top:20px">
+                                            @*<div class="cal-icon">*@
+                                            @Html.LabelFor(model => model.Date)&nbsp;
+                                            <input name="Date" id="editmeetingdate" placeholder="Enter Date" type="date" class="form-control" />
+                                            @*@Html.EditorFor(model => model.Date, "", new { @class = "form-control", @id = "editmeetingdate" })*@
+                                            @*<input type="text" class="form-control datetimepicker">*@
+                                            @*</div>*@
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @*<label>Time</label>*@
+                                        <p style="margin-top:20px">
+                                            @*<div class="time-icon">*@
+                                            @Html.LabelFor(model => model.Time)&nbsp;
+                                            <input name="Time" id="editmeetingtime" placeholder="Enter Time" type="time" class="form-control" />
+                                            @*@Html.EditorFor(model => model.Time, "", new { @class = "form-control", @id = "editmeetingtime" })*@
+
+                                            @*<input type="text" class="form-control" id="datetimepicker3">*@
+                                            @*</div>*@
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="CmpId" id="editmeetingcompnay" />
+                                                        
+                            <div class="form-group" style="margin-top:25px">
+                                <label>Message</label>
+                                @Html.LabelFor(model => model.Message)&nbsp;@Html.TextAreaFor(model => model.Message, new { @class = "form-control", @id = "editmeetingmessage" })
+
+                                @*<textarea cols="30" rows="4" class="form-control"></textarea>*@
+                            </div>
+
+
+                            <div class="m-t-20 text-center">
+                                <button class="btn btn-primary submit-btn">Save</button>
+                            </div>
+                        </form>}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @Html.Raw(ViewBag.delete)
+
+
+  
+    <div class="col-md-6">
+       
+        <div id="delete_meeting" class="modal fade delete-modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        @using (Html.BeginForm("DeleteCmpMeeting", "CmpEmployee", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="col-md-6">
+                                @*<input type="text" name="empid2" id="empid2" />*@
+                                <input type="hidden" id="Designation_id"/>
+                            </div>
+                            <h2>Are you sure want to delete this Meeting?</h2>
+                            <div class="m-t-20">
+                                <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                                <button type="submit" onclick="deletee()" class="btn btn-danger">Delete</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    // For Employee Load in Add Salary Case
+    $(document).ready(function () {
+        $("#USERIDf").change(function () {
+            $.get("/CmpEmployee/GetEmp", { DepartmentIDf: $("#USERIDf").val() }, function (data) {
+                $("#AddEmployee").empty();
+                $.each(data, function (index, row) {
+                    $("#AddEmployee").append("<option value='" + row.EmpId + "'>" + row.LName + "</option>")
+                });
+            });
+        })
+    });
+
+
+    // For Employee Load in Edit Salary Case
+    $(document).ready(function () {
+        $("#editmeetingdepartment").change(function () {
+
+            $.get("/CmpEmployee/GetEmp", { DepartmentIDf: $("#editmeetingdepartment").val() }, function (data) {
+                $("#editmeetingemployee").empty();
+                $.each(data, function (index, row) {
+                    $("#editmeetingemployee").append("<option value='" + row.EmpId + "'>" + row.LName + "</option>")
+                });
+            });
+        })
+    });
+
+
+
+
+
+    $(".btnEditMeeting").click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        alert(id);
+        //return;
+        $.ajax({
+            type: "GET",
+            url: "/CmpEmployee/EditCmpMeeting/?DesignationiD=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+                //var dd = JSON.parse(d).d;
+                //var department = JSON.parse(dd);
+                //console.log(department);
+
+                console.log(d);
+
+                $("#editmeetingid").val(id);
+                $("#editmeetingcompnay").val(d.CmpId);
+                $("#editmeetingdepartment").val(d.DeptId);
+                $("#editmeetingemployee").val(d.EmpId);
+                $("#editmeetingdate").val(d.Date);
+                $("#editmeetingtime").val(d.Time);
+                $("#editmeetingmessage").val(d.Message);
+
+
+                $("#edit_meeting").modal("show");
+            }
+        });
+    });
+
+    
+
+
+    function DeleteMeeting(Meetingid) {
+
+        $("#Designation_id").val(Meetingid);
+
+
+
+    }
+
+
+    var deletee = function () {
+
+        var idd = $("#Designation_id").val();
+        $.ajax({
+
+            type: "post",
+            url: "/CmpEmployee/DeleteCmpMeeting",
+            data: { Meetingid: idd },
+            success: function (result) {
+
+                $("Designation_id").val(null);
+                $("#delete_meeting").modal('hide');
+                window.location.href = "/CmpEmployee/CmpMeeting";
+            },
+        });
+
+    }
+
+
+
+</script>
+

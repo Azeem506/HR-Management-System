@@ -4,15 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="746f1aead6864080951ffd1c04f38a9e" Name="Diagram1">
-        <EntityTypeShape EntityType="EazisolsModel.Company" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EazisolsModel.Meeting" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EazisolsModel.Role" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EazisolsModel.Salary" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EazisolsModel.User" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EazisolsModel.User1" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EazisolsModel.Department" Width="1.5" PointX="3.375" PointY="7.75" />
-        <EntityTypeShape EntityType="EazisolsModel.sysdiagram" Width="1.5" PointX="5.375" PointY="8.75" />
+      <Diagram DiagramId="1bf0643376194fef9e745c149f4846a4" Name="Diagram1">
+        <EntityTypeShape EntityType="EazisolsModel.Company" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="EazisolsModel.Department" Width="1.5" PointX="5.25" PointY="4.625" />
+        <EntityTypeShape EntityType="EazisolsModel.Employee" Width="1.5" PointX="12.75" PointY="3.375" />
+        <EntityTypeShape EntityType="EazisolsModel.Meeting" Width="1.5" PointX="7.5" PointY="4.125" />
+        <EntityTypeShape EntityType="EazisolsModel.Role" Width="1.5" PointX="10.5" PointY="1" />
+        <EntityTypeShape EntityType="EazisolsModel.Salary" Width="1.5" PointX="10.5" PointY="3.5" />
+        <EntityTypeShape EntityType="EazisolsModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EazisolsModel.User" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="EazisolsModel.User1" Width="1.5" PointX="2.75" PointY="0.75" />
         <AssociationConnector Association="EazisolsModel.FK_Company_User" />
         <AssociationConnector Association="EazisolsModel.FK_Department_Company1" />
         <AssociationConnector Association="EazisolsModel.FK_Meeting_Company" />
@@ -20,16 +21,12 @@
         <AssociationConnector Association="EazisolsModel.FK_Department_User" />
         <AssociationConnector Association="EazisolsModel.FK_Meeting_Department" />
         <AssociationConnector Association="EazisolsModel.FK_Salary_Department" />
-        <AssociationConnector Association="EazisolsModel.FK_Meeting_User" />
-        <AssociationConnector Association="EazisolsModel.FK_Salary_Role" />
-        <AssociationConnector Association="EazisolsModel.FK_Salary_User" />
-        <EntityTypeShape EntityType="EazisolsModel.Employee" Width="1.5" PointX="9" PointY="3.625" />
-        <AssociationConnector Association="EazisolsModel.FK_Employee_Company1" />
-        <AssociationConnector Association="EazisolsModel.FK_Employee_Department1" />
         <AssociationConnector Association="EazisolsModel.FK_Employee_Role" />
         <AssociationConnector Association="EazisolsModel.FK_Employee_Salary" />
-        <AssociationConnector Association="EazisolsModel.FK_Employee_User" />
+        <AssociationConnector Association="EazisolsModel.FK_Meeting_Employee2" />
         <AssociationConnector Association="EazisolsModel.FK_Salary_Employee" />
+        <AssociationConnector Association="EazisolsModel.FK_Meeting_User" />
+        <AssociationConnector Association="EazisolsModel.FK_Salary_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

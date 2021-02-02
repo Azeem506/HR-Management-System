@@ -1,17 +1,4 @@
-﻿@*<script src="~/Scripts/select2.min.js"></script>*@
-
-
-@*<script src="~/Scripts/bootstrap.js"></script>*@
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-@*<link href="~/Content/css/select2.min.css" rel="stylesheet" />*@
-<link href="~/Content/css/style.css" rel="stylesheet" />
-<a href="~/fonts/fontawesome-webfont3e6e.eot">~/fonts/fontawesome-webfont3e6e.eot</a>
-<a href="~/fonts/fontawesome-webfont3e6e.html">~/fonts/fontawesome-webfont3e6e.html</a>
-<a href="~/fonts/fontawesome-webfont3e6e.woff">~/fonts/fontawesome-webfont3e6e.woff</a>
-<a href="~/fonts/fontawesome-webfontd41d.eot">~/fonts/fontawesome-webfontd41d.eot</a>
-
-
-
+﻿@model HR_Management_System.Models.Company
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -20,250 +7,324 @@
                 <h4 class="page-title">Company</h4>
             </div>
             <div class="col-sm-8 col-xs-9 text-right m-b-20">
-                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Company</a>
+                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_client"> Add Company</a>
                 <div class="view-icons">
                     <a href="clients.html" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                     <a href="clients-list.html" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
         </div>
-
-        <div class="row staff-grid-row">
-
-
+        @ViewBag.exit
+        
+    <div class="row staff-grid-row">
+        @*@{
+            var a = @ViewBag.admin;
+            var b = @Model.UserId;
+        }
+        @if (a == b )
+        {*@
             @foreach (var item in ViewBag.comp)
             {
 
-<div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
+                <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
 
-    <div class="profile-widget">
+                    <div class="profile-widget">
 
-        <div class="profile-img">
-            @*<a href="@item.Image" class="avatar"></a>*@
-           
-            <a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })" class="avatar"><img src="@item.Image" style="width:150px; height:100px;"/></a>
-        </div>
-        @*@{
-            int id = @item.CmpId;
-        }*@
+                        <div class="profile-img">
+                            @*<a href="@item.Image" class="avatar"></a>*@
 
-    <div class="dropdown profile-action">
-        
-            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-            <ul class="dropdown-menu pull-right">
-                @*<li><a href="#" data-id="@item.CmpId" name="btnEdit" data-toggle="modal" class="editDepartmentBtn" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                <li><a href="#" class="btn btn-success" onclick="EditCompany(@item.CmpId)" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Edit</a></li>*@
-                @*<li><a href="#" class="editDepartmentBtn" data-id="@item.CmpId" data-toggle="modal" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>*@
-                <li><a href="#" class="editDepartmentBtn" data-id="@item.CmpId" data-toggle="modal" data-target="#edit_client" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                <li><a href="#" class="deleteCompanyBtn" data-id="@item.CmpId" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-            </ul>
-        </div>
-        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })">@item.CmpName</a></h4>
-        <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })">@item.UserName</a></h5>
-        <div class="small text-muted">CEO</div>
+                            <a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })" class="avatar"><img src="@item.Image" style="width:150px; height:100px;" /></a>
+                        </div>
+                        @*@{
+                            int id = @item.CmpId;
+                        }*@
 
-        <a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })" class="btn btn-default btn-sm m-t-10">View Profile</a>
-    </div>
+                        <div class="dropdown profile-action">
 
-</div>
+                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                            <ul class="dropdown-menu pull-right">
+                                @*<li><a href="#" data-id="@item.CmpId" name="btnEdit" data-toggle="modal" class="editDepartmentBtn" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                <li><a href="#" class="btn btn-success" onclick="EditCompany(@item.CmpId)" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Edit</a></li>*@
+                                @*<li><a href="#" class="editDepartmentBtn" data-id="@item.CmpId" data-toggle="modal" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>*@
+                                <li><a href="#" class="dropdown-item editCompanyBtn" data-id="@item.CmpId" data-toggle="modal" data-target="#edit_client" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                <li><a href="#" class="dropdown-item " onclick="DeleteEmployee(@item.CmpId)" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                            </ul>
+                        </div>
+                        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })">@item.CmpName</a></h4>
+                        @*<h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })">@item.UserName</a></h5>*@
+                        @*<div class="small text-muted">CEO</div>*@
+
+                        <a href="@Url.Action("CompanyProfile", "Company" , new { id=item.CmpId })" class="btn btn-default btn-sm m-t-10">View Profile</a>
+                    </div>
+
+                </div>
             }
+        @*}*@
 
 
 
 
-            <div id="add_client" class="modal custom-modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-content modal-lg">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Company</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="m-b-30">
-                                <form action="~/Company/AddCompany" method="post" enctype="multipart/form-data">
-                                    <div class="row">
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="username">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" id="username" name="username">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="password">Password</label>
-                                                <input class="form-control" type="password" id="password" name="password">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="cpassword">Confirm Password</label>
-                                                <input class="form-control" type="password" id="cpassword" name="cpassword">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="mail">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control floating" type="email" id="mail" name="mail">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="cname">Company Name</label>
-                                                <input class="form-control" type="text" id="cname" name="cname">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="cid">Company ID <span class="text-danger">*</span></label>
-                                                <input class="form-control floating" type="text" id="cid" name="cid">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="phone">Phone </label>
-                                                <input class="form-control" type="text" id="phone" name="phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
-                                                <input class="form-control floating" type="file" id="Image" name="Image">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive m-t-15">
 
-                                    </div>
-                                    <div class="m-t-20 text-center">
-                                        <button class="btn btn-primary">Create Company</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+        <div id="add_client" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Company</h4>
                     </div>
-                </div>
-            </div>
-            <div id="edit_client" class="modal custom-modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <div class="modal-content modal-lg">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Edit Company</h4>
-                        </div>
-                        <div class="modal-body" id="=myModelBody">
-                            <div class="m-b-30">
-                                <form action="~/Company/EditCompany" method="post">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <input type="hidden" name="cmpid" id="cmpid" />
+                    <div class="modal-body">
+                        <div class="m-b-30">
+                            @using (Html.BeginForm("Company", "Company", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @*<form action="~/Company/AddCompany" method="post" enctype="multipart/form-data">*@
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="username">Company Name <span class="text-danger">*</span></label>
+                                            @Html.EditorFor(model => model.CmpName, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                            @*<label class="control-label" for="username">Username <span class="text-danger">*</span></label>*@
+                                            @*<input class="form-control" type="text" id="username" name="username">*@
                                         </div>
-                                        @*<div class="col-md-6">
-                                            <input type="hidden" name="cmpid1" id="cmpid1" />
-                                        </div>*@
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
 
-                                        @*<div class="col-md-6">
-          <div class="form-group">
-            <label class="control-label">CompanyId <span class="text-danger">*</span></label>
-            <input class="form-control" name="CmpId" id="CmpId" value="" type="text">
-          </div>
-        </div>*@
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label">Company Name</label>
-                                                <input class="form-control" type="text" value="" name="CmpName" id="CmpName">
-                                            </div>
+                                            <label class="control-label" for="password">Company CEO</label>
+
+                                            @Html.EditorFor(model => model.CmpCEO, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                            @*<label class="control-label" for="password">Password</label>*@
+                                            @*<input class="form-control" type="password" id="password" name="password">*@
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" name="UserName" id="UserName" value="" type="text">
-                                            </div>
+                                            <label class="control-label" for="password">Company Address</label>
+
+                                            @Html.EditorFor(model => model.CmpAddress, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                            @*<label class="control-label" for="password">Password</label>*@
+                                            @*<input class="form-control" type="password" id="password" name="password">*@
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label">Password</label>
-                                                <input class="form-control" value="" type="password" name="Password" id="Password">
-                                            </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label class="control-label" for="password">User Name</label>
+
+                                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                            @*<label class="control-label" for="password">Password</label>*@
+                                            @*<input class="form-control" type="password" id="password" name="password">*@
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control floating" value="" name="Email" id="Email" type="email">
-                                            </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="password">Password</label>
+                                            <input class="form-control" type="password" id="emppassword" name="Password">
+                                            @*@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+
+
+                                            @*<input class="form-control" type="password" id="password" name="password">*@
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label">Phone </label>
-                                                <input class="form-control" value="" type="text" name="Phone" id="Phone">
-                                            </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label class="control-label" for="cpassword">Confirm Password</label>
+
+                                            @*@Html.PasswordFor(model => model.CPassword, new { htmlAttributes = new { @class = "form-control" } })*@
+                                            <input class="form-control" type="password" id="empcpassword" name="CPassword">
+
+                                            @*<input class="form-control" type="password" id="cpassword" name="cpassword">*@
                                         </div>
-                                        @*<div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Address</label>
-                <input class="form-control" value="" type="text" name="Address" id="Address">
-            </div>
-        </div>*@
-                                        @*<div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label">Choose Photo<span class="text-danger">*</span></label>
-                                                <input class="form-control floating" value="" type="file" id="Image1" name="Image1">
-                                            </div>
-                                        </div>*@
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label class="control-label" for="mail">Email <span class="text-danger">*</span></label>
+
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
 
 
-
-                                        @*<div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Address <span class="text-danger">*</span></label>
-                <input class="form-control floating" value="" type="text">
-
-            </div>
-        </div>*@
-
-
-
-
+                                            @*<input class="form-control floating" type="email" id="mail" name="mail">*@
+                                        </div>
                                     </div>
 
-                                    <div class="m-t-20 text-center">
-                                        <button class="btn btn-primary">Edit Company</button>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label class="control-label" for="phone">Phone </label>
+
+                                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                            @*<input class="form-control" type="text" id="phone" name="phone">*@
+                                        </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="delete_client" class="modal custom-modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content modal-md">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Delete Client</h4>
-                        </div>
-                        <div class="modal-body card-box">
-                            <form action="~/Company/DelCompany" method="post">
-                                <p>Are you sure want to delete this?</p>
-                                @*<input type="text" id="Companyid"/>*@
-                                <input type="hidden" name="cmpid1" id="cmpid1"/>
-                                <div class="m-t-20">
-                                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                                    <button type="submit" id="Btn_Delete" class="btn btn-danger">Delete</button>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                                            <input class="form-control floating" type="file" id="ImageCompany" name="ImageCompany">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            @*<label class="control-label" for="cid">Company ID <span class="text-danger">*</span></label>*@
+                                            @Html.HiddenFor(model => model.CmpId, new { htmlAttributes = new { @class = "form-control" } })
+                                            @*<input class="form-control floating" type="text" id="cid" name="cid">*@
+                                        </div>
+                                    </div>
                                 </div>
-                            </form>
+                                <div class="table-responsive m-t-15">
+
+                                </div>
+                                <div class="m-t-20 text-center">
+                                    <button class="btn btn-primary">Create Company</button>
+                                </div>
+                                <span>
+                                    @ViewBag.exit
+                                </span>
+                                @*</form>*@}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="edit_client" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Company</h4>
+                    </div>
+                    <div class="modal-body" id="=myModelBody">
+                        <div class="m-b-30">
+                            @using (Html.BeginForm("EditCompany", "Company", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @*<form action="~/Company/EditCompany" method="post">*@
+                                <div class="row">
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Company Name</label>
+                                            @Html.EditorFor(model => model.CmpName, new { htmlAttributes = new { @class = "form-control", @id = "editCmpName" } })
+
+                                            @*<input class="form-control" type="text" value="" name="CmpName" id="CmpName">*@
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Username <span class="text-danger">*</span></label>
+                                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "editusername" } })
+
+                                            @*<input class="form-control" name="UserName" id="UserName" value="" type="text">*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Password</label>
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "editpass" } })
+
+                                            @*<input class="form-control" value="" type="password" name="Password" id="Password">*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Email <span class="text-danger">*</span></label>
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "editemail" } })
+
+                                            @*<input class="form-control floating" value="" name="Email" id="Email" type="email">*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Phone </label>
+                                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @id = "editphone" } })
+
+                                            @*<input class="form-control" value="" type="text" name="Phone" id="Phone">*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                                            @*@Html.EditorFor(model => model.EmpImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                                            <input class="form-control floating" type="file" id="editCmpImage" name="editCmpImage">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.CmpId, new { htmlAttributes = new { @class = "form-control", @id = "editCmpid", @Type = "hidden" } })
+
+                                        @*<input type="hidden" name="cmpid" id="cmpid" />*@
+                                    </div>
+
+
+                                </div>
+
+                                <div class="m-t-20 text-center">
+                                    <button class="btn btn-primary">Edit Company</button>
+                                </div>
+                                @*</form>*@}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="delete_client" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Client</h4>
+                    </div>
+                    <div class="modal-body card-box">
+                        @Html.Raw(ViewBag.delete)
+                        @using (Html.BeginForm("DeleteCompany", "Company", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <p>Are you sure want to delete this?</p>
+                            <div class="col-md-6">
+
+                                <input type="text" id="Designation_id" />
+                            </div>
+                            <div class="m-t-20 text-left">
+                                <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                                <button type="submit" onclick="deletee()" class="btn btn-danger">Delete</button>
+
+                            </div>}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
     </div>
 </div>
 <script>
-   
-    $(".editDepartmentBtn").click(function () {
+
+    $(".editCompanyBtn").click(function () {
         var id = $(this).data("id");
         console.log(id);
+        alert(id);
         //return;
         $.ajax({
             type: "GET",
@@ -272,55 +333,88 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (d) {
-                //var dd = JSON.parse(d).d;
-                //var department = JSON.parse(dd);
-                //console.log(department);
+               
 
                 console.log(d);
 
-                $("#cmpid").val(d.CmpId);
-                $("#UserName").val(d.UserName);
-                $("#Password").val(d.Password);
-                $("#Email").val(d.Email);
-                $("#CmpName").val(d.CmpName);
-                $("#Phone").val(d.Phone);
-                $("#Image1").val(d.Image);
+                $("#editCmpid").val(d.CmpId);
+                $("#editusername").val(d.UserName);
+                $("#editpass").val(d.Password);
+                $("#editemail").val(d.Email);
+                $("#editCmpName").val(d.CmpName);
+                $("#editphone").val(d.Phone);
+                $("#editCmpImage").val(d.Image);
 
                 $("#edit_client").modal("show");
             }
         });
     });
 
-    $(".deleteCompanyBtn").click(function () {
-        var id = $(this).data("id");
-        console.log(id);
-        //return;
-        alert(id);
+
+    function DeleteEmployee(Companyid) {
+
+        $("#Designation_id").val(Companyid);
+        alert(Companyid);
+
+
+    }
+
+
+    var deletee = function () {
+
+        var idd = $("#Designation_id").val();
         $.ajax({
-            type: "GET",
-            url: "/Company/DelCompany/?DesignationiD=" + id + "",
-            //data: "{DesignationiD:" + id + "}",
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (d) {
-                //var dd = JSON.parse(d).d;
-                //var department = JSON.parse(dd);
-                //console.log(department);
 
-                console.log(d);
+            type: "post",
+            url: "/Company/DeleteCompany",
+            data: { Companyid: idd },
+            success: function (result) {
 
-                $("#cmpid1").val(d.CmpId);
-                $("#UserName").val(d.UserName);
-                $("#Password").val(d.Password);
-                $("#Email").val(d.Email);
-                $("#CmpName").val(d.CmpName);
-                $("#Phone").val(d.Phone);
-                $("#Image").val(d.Image);
-
-                $("#delete_client").modal("show");
-            }
+                $("Designation_id").val(null);
+                $("#delete_client").modal('hide');
+                window.location.reload();
+            },
         });
-    });
+
+    }
+
+
+
+
+
+
+
+
+    //$(".deleteCompanyBtn").click(function () {
+    //    var id = $(this).data("id");
+    //    console.log(id);
+    //    //return;
+    //    alert(id);
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Company/DelCompany/?DesignationiD=" + id + "",
+    //        //data: "{DesignationiD:" + id + "}",
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (d) {
+    //            //var dd = JSON.parse(d).d;
+    //            //var department = JSON.parse(dd);
+    //            //console.log(department);
+
+    //            console.log(d);
+
+    //            $("#cmpid1").val(d.CmpId);
+    //            $("#UserName").val(d.UserName);
+    //            $("#Password").val(d.Password);
+    //            $("#Email").val(d.Email);
+    //            $("#CmpName").val(d.CmpName);
+    //            $("#Phone").val(d.Phone);
+    //            $("#Image").val(d.Image);
+
+    //            $("#delete_client").modal("show");
+    //        }
+    //    });
+    //});
     //import { post } from "jquery";
 
     //$(document).ready(function () {

@@ -1,0 +1,268 @@
+﻿@model HR_Management_System.Models.Department
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-5 col-5">
+                <h4 class="page-title">Department</h4>
+            </div>
+            <div class="col-sm-7 col-7 text-right m-b-30">
+                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add New Department</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tab-content  profile-tab-content">
+                    <div id="myprojects" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div>
+                                    <table class="table table-striped custom-table m-b-0 datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Department Name</th>
+                                                @*<th>Company Name</th>*@
+                                                <th class="text-right">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="delete_department" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Department</h4>
+            </div>
+            <div class="modal-body card-box">
+                @Html.Raw(ViewBag.delete)
+                @using (Html.BeginForm("DeleteDepartment", "Department", FormMethod.Post))
+                {
+    @Html.AntiForgeryToken()
+
+                    <p>Are you sure want to delete this?</p>
+                                    <div class="col-md-6">
+                                        @*<input type="text" name="empid2" id="empid2" />*@
+                                        <input type="text" id="Designation_id" />
+                                    </div>
+                                                    <div class="m-t-20 text-left">
+                                                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                                                        <button type="submit" onclick="deletee()" class="btn btn-danger">Delete</button>
+                                                        @*<button type="submit" class="btn btn-danger">Delete</button>*@
+                                                    </div>}
+                @*<form action="~/Department/DelDepartment" method="post">
+                        <p>Are you sure want to delete this?</p>
+                        <input type="hidden" name="delete1" id="delete1" />
+                        <div class="m-t-20 text-left">
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div id="add_department" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Department</h4>
+            </div>
+            <div class="modal-body">
+                <div class="m-b-30">
+                    @using (Html.BeginForm("Department", "CmpDept", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @*<form action="~/Department/AddDepartment" method="post">*@
+                        <div class="row">
+                            @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Company</label>
+                                    @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>*@
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Department Name</label>
+                                    @Html.EditorFor(model => model.DeptName, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    @*<input class="form-control" type="text" id="dname" name="dname">*@
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="table-responsive m-t-15">
+
+                        </div>
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary">Add Department</button>
+                        </div>
+                        @*</form>*@}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="edit_department" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Department</h4>
+            </div>
+            <div class="modal-body">
+                <div class="m-b-30">
+                    @using (Html.BeginForm("EditDepartment", "Department", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @*<form action="~/Department/EditDepartment" method="post">*@
+                        <div class="row">
+                            @*<div class="col-md-6">
+                                    <input type="hidden" name="did1" id="did1" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="hidden" name="did6" id="did6" />
+                                </div>*@
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Company</label>
+                                    @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", @id = "editcompany", required = "required" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Department Name</label>
+                                    @Html.EditorFor(model => model.DeptName, new { htmlAttributes = new { @class = "form-control", @id = "editDeptname" } })
+
+                                    @*<input class="form-control" type="text" value="" id="dname1" name="dname1">*@
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    @Html.HiddenFor(model => model.DeptId, new { htmlAttributes = new { @class = "form-control", @id = "editDeptid" } })
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary">Edit Department</button>
+                        </div>
+                        @*</form>*@}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(".editDepartmentBtn").click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        //alert(id);
+        //return;
+        $.ajax({
+            type: "GET",
+            url: "/Department/EditDepartment1/?DesignationiD=" + id + "",
+            //data: "{DesignationiD:" + id + "}",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (d) {
+                //var dd = JSON.parse(d).d;
+                //var department = JSON.parse(dd);
+                //console.log(department);
+
+                console.log(d);
+
+                $("#editDeptid").val(d.DeptId);
+                $("#editDeptname").val(d.DeptName);
+                $("#editcompany").val(d.CmpId);
+
+
+                $("#edit_department").modal("show");
+            }
+        });
+    });
+
+
+    function DeleteDepartment(Departmentid) {
+
+        $("#Designation_id").val(Departmentid);
+
+
+
+    }
+
+
+    var deletee = function () {
+
+        var idd = $("#Designation_id").val();
+        $.ajax({
+
+            type: "post",
+            url: "/Department/DeleteDepartment",
+            data: { Departmentid: idd },
+            success: function (result) {
+
+                $("Designation_id").val(null);
+                $("#delete_department").modal('hide');
+                window.location.reload();
+            },
+        });
+
+    }
+
+
+
+    //$(".deleteDepartmentBtn").click(function () {
+    //    var id = $(this).data("id");
+    //    console.log(id);
+    //    //return;
+    //    alert(id);
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Department/DelDepartment/?DesignationiD=" + id + "",
+    //        //data: "{DesignationiD:" + id + "}",
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (d) {
+    //            //var dd = JSON.parse(d).d;
+    //            //var department = JSON.parse(dd);
+    //            //console.log(department);
+
+    //            console.log(d);
+
+    //            $("#delete1").val(d.DeptId);
+    //            $("#username").val(d.UserName);
+    //            $("#password").val(d.Password);
+    //            $("#email").val(d.Email);
+    //            $("#DeptName").val(d.CmpName);
+    //            $("#phone").val(d.Phone);
+
+
+    //            $("#delete_department").modal("show");
+    //        }
+    //    });
+    //});
+
+</script>

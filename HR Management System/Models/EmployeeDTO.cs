@@ -14,6 +14,8 @@ namespace HR_Management_System.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+
+        //public string RoleType { get; set; }
         //public DateTime JoiningDate { get; set; }
     }
 }

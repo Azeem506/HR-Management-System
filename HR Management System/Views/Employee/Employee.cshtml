@@ -1,13 +1,13 @@
-﻿@*@model HR_Management_System.Models.Company*@
-<script src="~/Scripts/bootstrap.js"></script>
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+﻿
+@model HR_Management_System.Models.Employee
+@*<script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
 @*<link href="~/Content/css/select2.min.css" rel="stylesheet" />*@
-<link href="~/Content/css/style.css" rel="stylesheet" />
-<a href="~/fonts/fontawesome-webfont3e6e.eot">~/fonts/fontawesome-webfont3e6e.eot</a>
-<a href="~/fonts/fontawesome-webfont3e6e.html">~/fonts/fontawesome-webfont3e6e.html</a>
-<a href="~/fonts/fontawesome-webfont3e6e.woff">~/fonts/fontawesome-webfont3e6e.woff</a>
-<a href="~/fonts/fontawesome-webfontd41d.eot">~/fonts/fontawesome-webfontd41d.eot</a>
-
+@*<link href="~/Content/css/style.css" rel="stylesheet" />
+    <a href="~/fonts/fontawesome-webfont3e6e.eot">~/fonts/fontawesome-webfont3e6e.eot</a>
+    <a href="~/fonts/fontawesome-webfont3e6e.html">~/fonts/fontawesome-webfont3e6e.html</a>
+    <a href="~/fonts/fontawesome-webfont3e6e.woff">~/fonts/fontawesome-webfont3e6e.woff</a>
+    <a href="~/fonts/fontawesome-webfontd41d.eot">~/fonts/fontawesome-webfontd41d.eot</a>*@
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
@@ -15,7 +15,7 @@
                 <h4 class="page-title">Employee</h4>
             </div>
             <div class="col-sm-8 col-xs-9 text-right m-b-20">
-                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                <a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_employee"> Add Employee</a>
                 <div class="view-icons">
                     <a href="employees.html" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                     <a href="employees-list.html" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
@@ -30,25 +30,27 @@
 <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
     <div class="profile-widget">
         <div class="profile-img">
-            <a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId })" class="avatar"><img src="@item.EmpImage" style="width:150px; height:100px;" /></a>
+            <a href="@Url.Action("EmpProfile", "Employee", new { id = item.EmpId })" class="avatar"><img src="@item.EmpImage" style="width:150px; height:100px;" /></a>
         </div>
         <div class="dropdown profile-action">
+
             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
             <ul class="dropdown-menu pull-right">
-                <li><a href="#" class="editEmployeeBtn" data-id="@item.EmpId" data-toggle="modal" data-target="#edit_employee" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                <li><a href="#" class="deleteEmployeeBtn" data-id="@item.EmpId" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                <li><a href="#" class="dropdown-item editEmployeeBtn" data-id="@item.EmpId" data-toggle="modal" data-target="#edit_employee" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                @*<li><a href="#" class="dropdown-itemdeleteEmployeeBtn" data-id="@item.EmpId" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                    <a class="dropdown-item btnEditMeeting" id="" data-id="@item.MeetingId" href="#" data-toggle="modal" data-target="#edit_meeting"><i class="fa fa-pencil m-r-5"></i> Edit</a>*@
+                <a class="dropdown-item" onclick="DeleteEmployee(@item.EmpId)" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                 @*<li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>*@
+                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>*@
             </ul>
         </div>
-        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId})">@item.FName</a></h4>
-        <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId })">@item.LName</a></h5>
+        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("EmpProfile", "Employee", new { id = item.EmpId })">@item.FName</a></h4>
+        <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="@Url.Action("EmpProfile", "Employee", new { id = item.EmpId })">@item.LName</a></h5>
         <div class="small text-muted">Employee</div>
 
-        <a href="@Url.Action("EmpProfile", "Employee" , new { id=item.EmpId })" class="btn btn-default btn-sm m-t-10">View Profile</a>
+        <a href="@Url.Action("EmpProfile", "Employee", new { id = item.EmpId })" class="btn btn-default btn-sm m-t-10">View Profile</a>
 
-        @*<h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="~/Employee/EmpProfile">@item.LName</a></h4>
-        <div class="small text-muted">Employee</div>*@
+
     </div>
 </div>}
         </div>
@@ -63,60 +65,94 @@
                 <h4 class="modal-title">Add Employee</h4>
             </div>
             <div class="modal-body">
-                <form action="~/Employee/AddEmployee" method="post" enctype="multipart/form-data">
+                @using (Html.BeginForm("Employee", "Employee", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+    @Html.AntiForgeryToken() @*<form action="~/Employee/AddEmployee" method="post" enctype="multipart/form-data">*@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="empfirstname" name="empfirstname">
+                                @Html.EditorFor(model => model.FName, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="empfirstname" name="empfirstname">*@
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Last Name</label>
-                                <input class="form-control" type="text" id="emplastname" name="emplastname">
+                                @Html.EditorFor(model => model.LName, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="emplastname" name="emplastname">*@
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Username <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="empusername" name="empusername">
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="empusername" name="empusername">*@
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Email <span class="text-danger">*</span></label>
-                                <input class="form-control" type="email" id="empemail" name="empemail">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="email" id="empemail" name="empemail">*@
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Password</label>
-                                <input class="form-control" type="password" id="emppassword" name="emppassword">
+                                @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+                                <input class="form-control" type="password" id="emppassword" name="Password">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Confirm Password</label>
+
                                 <input class="form-control" type="password" id="empcpassword" name="empcpassword">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label>Date</label>*@
+                                <p style="margin-top:20px">
+                                    @*<div class="cal-icon">*@
+                                    @Html.LabelFor(model => model.JoiningDate)&nbsp;
+                                    <input type="date" name="JoiningDate" class="form-control">
+                                    @*@Html.EditorFor(model => model.JoiningDate, "", new { @class = "form-control" })*@
+                                    @*<input type="text" class="form-control datetimepicker">*@
+                                    @*</div>*@
+                                </p>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Employee ID <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="empid" name="empid">
+                                @*<label class="control-label">Employee ID <span class="text-danger">*</span></label>*@
+                                @Html.HiddenFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input type="text" class="form-control" id="empid" name="empid">*@
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Phone </label>
-                                <input class="form-control" type="text" id="empphone" name="empphone">
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input class="form-control" type="text" id="empphone" name="empphone">*@
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <label class="control-label" for="password">Employee Address</label>
+
+                                @Html.EditorFor(model => model.EmpAddress, new { htmlAttributes = new { @class = "form-control" } })
+
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                                @*@Html.EditorFor(model => model.EmpImage, new { htmlAttributes = new { @class = "form-control" } })*@
                                 <input class="form-control floating" type="file" id="empimage" name="empimage">
                             </div>
                         </div>
@@ -128,33 +164,49 @@
                             </div>*@
                         <div class="col-sm-6">
                             <div class="form-group">
-                        @*@Html.DropDownList("OSRddl",null, "Please select Company")*@
-                        <label class="control-label">Company</label>
-                        <select class="select" id="empcompany" name="empcompany">
-                            @{ foreach (var item in ViewBag.cmp)
-                                            {
-                                <option value="@item.CmpName"  >@item.CmpName</option> @*<option value="1">Delta Infotech</option>*@ } }
-                        </select>
+
+                                <label class="control-label">Company</label>
+                                @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ---", new { @class = "form-control", @id="cmpiddddd" , required = "required" })
+
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Department</label>
-                                <select class="select" id="empdept" name="empdept">
-                                    @{ foreach (var item in ViewBag.dept)
-                                        {
-                                         <option value="@item.DeptName" >@item.DeptName</option>
-} }
+                                @Html.DropDownListFor(model => model.DeptId, new SelectList(" "), "--- Select Department ---", new { @class = "form-control USERIDf ", @id = "USERIDf" })
+                            </div>
+                        </div>
 
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Role</label>
+                                @Html.DropDownListFor(item => @Model.RoleId, ViewBag.role as SelectList, "--- Select Role ----", new { @class = "form-control", required = "required" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <select class="form-control Gender" id="Gender" name="Gender">
+                                    <option>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Check if HOD</label>
+                                @Html.CheckBoxFor(model => model.IsHOD, new { @id = "IsHod", @class = "IsHod" })
                             </div>
                         </div>
                     </div>
 
-                    <div class="m-t-20 text-center">
-                        <button class="btn btn-primary">Create Employee</button>
-                    </div>
-                </form>
+
+                                    <div class="m-t-20 text-center">
+                                        <button class="btn btn-primary">Create Employee</button>
+                                    </div> @*</form>*@}
+
             </div>
         </div>
     </div>
@@ -167,107 +219,164 @@
                 <h4 class="modal-title">Edit Employee</h4>
             </div>
             <div class="modal-body">
-                <form action="~/Employee/EditEmployee" method="post">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="text" name="hiddenid" id="hiddenid" />
-                        </div>
-                        @*<div class="col-md-6">
-                            <input type="hidden" name="hiddenid1" id="hiddenid1" />
-                        </div>*@
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="editfname" name="editfname">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Last Name</label>
-                                <input class="form-control" type="text" id="editlname" name="editlname">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Username <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="editusername" name="editusername">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Email <span class="text-danger">*</span></label>
-                                <input class="form-control" type="email" id="editemail" name="editemail">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Password</label>
-                                <input class="form-control" type="password" id="editpass" name="editpass">
-                            </div>
-                        </div>
-                        @*<div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Confirm Password</label>
-                                    <input class="form-control" type="password" id="empcpassword" name="empcpassword">
-                                </div>
-                            </div>*@
-                        @*<div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Employee ID <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="empid" name="empid">
-                                </div>
-                            </div>*@
-                        @*<div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Joining Date <span class="text-danger">*</span></label>
-                                    <div class="cal-icon"><input class="form-control datetimepicker" type="text" id="joindate" name="joindate"></div>
-                                </div>
-                            </div>*@
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Phone </label>
-                                <input class="form-control" type="text" id="editphone" name="editphone">
-                            </div>
-                        </div>
-                        @*<div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
-                                <input class="form-control floating" type="file" id="editimage" name="editimage">
-                            </div>
-                        </div>*@
-                        @*<div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Joining Date <span class="text-danger">*</span></label>
-                                    <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-                                </div>
-                            </div>*@
+                @using (Html.BeginForm("EditEmployee", "Employee", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+    @Html.AntiForgeryToken() @*<form action="~/Employee/EditEmployee" method="post">*@
+                <div class="row">
 
-                        @*<div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Company</label>
-                                    <select class="select">
-                                        <option>Global Technologies</option>
-                                        <option>Delta Infotech</option>
-                                        <option selected>International Software Inc</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Designation</label>
-                                    <select class="select">
-                                        <option>Web Developer</option>
-                                        <option>Web Designer</option>
-                                        <option>SEO Analyst</option>
-                                    </select>
-                                </div>
-                            </div>*@
+                    @*<div class="col-md-6">
+            <input type="hidden" name="hiddenid3" id="hiddenid3" />
+        </div>*@
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.FName, new { htmlAttributes = new { @class = "form-control", @id = "editfname" } })
+                            @*<input class="form-control" type="text" id="editfname" name="editfname">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name</label>
+                            @Html.EditorFor(model => model.LName, new { htmlAttributes = new { @class = "form-control", @id = "editlname" } })
+                            @*<input class="form-control" type="text" id="editlname" name="editlname">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Username <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "editusername" } })
+                            @*<input class="form-control" type="text" id="editusername" name="editusername">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Email <span class="text-danger">*</span></label>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "editemail" } })
+                            @*<input class="form-control" type="email" id="editemail" name="editemail">*@
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Password</label>
+                            @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "editpass" } })*@
+                            <input class="form-control" type="password" id="editpass" name="Password">
+                        </div>
                     </div>
 
-                    <div class="m-t-20 text-center">
-                        <button class="btn btn-primary">Save Changes</button>
+
+                    @Html.EditorFor(model => model.EmpAddress, new { htmlAttributes = new { @class = "form-control", @Type = "hidden", @id = "editEmpAddress" } })
+                    <input type="hidden" id="editDate" name="JoiningDate" class="form-control">
+                    @Html.CheckBoxFor(model => model.IsHOD, new { @id = "IsHod", @Type = "hidden", @class = "IsHod" })
+                    
+
+
+
+                    @*<div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Confirm Password</label>
+                <input class="form-control" type="password" id="empcpassword" name="empcpassword">
+            </div>
+        </div>*@
+                    @*<div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Employee ID <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="empid" name="empid">
+            </div>
+        </div>*@
+                    @*<div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Joining Date <span class="text-danger">*</span></label>
+                <div class="cal-icon"><input class="form-control datetimepicker" type="text" id="joindate" name="joindate"></div>
+            </div>
+        </div>*@
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Phone </label>
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @id = "editphone" } })
+                            @*<input class="form-control" type="text" id="editphone" name="editphone">*@
+                        </div>
                     </div>
-                </form>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                            @*@Html.EditorFor(model => model.EmpImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <input class="form-control floating" type="file" id="empimage1" name="empimage1">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Company</label>
+                            @Html.DropDownListFor(item => @Model.CmpId, ViewBag.cmp as SelectList, "--- Select Company ----", new { @class = "form-control", @id = "editcompany", required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Department</label>
+                            @Html.DropDownListFor(model => model.DeptId, new SelectList(" "), "--Select Project  Leader--", new { @class = "form-control  ", @id = "USERIDfff" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Role</label>
+                            @Html.DropDownListFor(item => @Model.RoleId, ViewBag.role as SelectList, "--- Select Role ----", new { @class = "form-control", @id = "editrole", required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Gender</label>
+                            <select class="form-control Gender" id="Gender" name="Gender">
+                                <option>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @id = "editEmpid", Type = "hidden" } })
+
+                        @*<input type="text" name="hiddenid" id="hiddenid" />*@
+                    </div>
+
+                    @*<div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label" for="Image">Choose Photo<span class="text-danger">*</span></label>
+                <input class="form-control floating" type="file" id="editimage" name="editimage">
+            </div>
+        </div>*@
+                    @*<div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Joining Date <span class="text-danger">*</span></label>
+                <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
+            </div>
+        </div>*@
+
+                    @*<div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Company</label>
+                <select class="select">
+                    <option>Global Technologies</option>
+                    <option>Delta Infotech</option>
+                    <option selected>International Software Inc</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Designation</label>
+                <select class="select">
+                    <option>Web Developer</option>
+                    <option>Web Designer</option>
+                    <option>SEO Analyst</option>
+                </select>
+            </div>
+        </div>*@
+                </div>
+
+                                    <div class="m-t-20 text-center">
+                                        <button class="btn btn-primary">Save Changes</button>
+                                    </div> @*</form>*@}
             </div>
         </div>
     </div>
@@ -278,21 +387,62 @@
             <div class="modal-header">
                 <h4 class="modal-title">Delete Employee</h4>
             </div>
-            <form action="~/Employee/DelEmployee" method="post">
-                <div class="modal-body card-box">
-                    <p>Are you sure want to delete this?</p>
-                    <input type="hidden" name="empid1" id="empid1" />
-                    <div class="m-t-20">
+            @Html.Raw(ViewBag.delete)
+            @using (Html.BeginForm("DeleteEmployee", "Employee", FormMethod.Post))
+            {
+@Html.AntiForgeryToken()
 
-                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                <p>Are you sure want to delete this?</p>
+                                <div class="col-md-6">
+                                    @*<input type="text" name="empid2" id="empid2" />*@
+                                    <input type="text" id="Designation_id" />
+                                </div>
+                                                <div class="m-t-20 text-left">
+                                                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                                                    <button type="submit" onclick="deletee()" class="btn btn-danger">Delete</button>
+                                                    @*<button type="submit" class="btn btn-danger">Delete</button>*@
+                                                </div>}
+
+            @*<form action="~/Employee/DelEmployee" method="post">
+                    <div class="modal-body card-box">
+                        <p>Are you sure want to delete this?</p>
+                        <input type="hidden" name="empid1" id="empid1" />
+                        <div class="m-t-20">
+
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>*@
         </div>
     </div>
 </div>
 <script>
+
+    $(document).ready(function () {
+        $("#cmpiddddd").change(function () {
+            $.get("/Employee/Getdept", { CompanyIDf: $("#cmpiddddd").val() }, function (data) {
+                $("#USERIDf").empty();
+                $.each(data, function (index, row) {
+                    $("#USERIDf").append("<option value='" + row.DeptId + "'>" + row.DeptName + "</option>")
+                });
+            });
+        })
+    });
+
+    $(document).ready(function () {
+        $("#editcompany").change(function () {
+
+            $.get("/Employee/Getdept", { CompanyIDf: $("#editcompany").val() }, function (data) {
+                $("#USERIDfff").empty();
+                $.each(data, function (index, row) {
+                    $("#USERIDfff").append("<option value='" + row.DeptId + "'>" + row.DeptName + "</option>")
+                });
+            });
+        })
+    });
+    
+
 
     $(".editEmployeeBtn").click(function () {
         var id = $(this).data("id");
@@ -311,49 +461,93 @@
 
                 console.log(d);
 
-                $("#hiddenid").val(d.EmpId);
+                $("#editEmpid").val(d.EmpId);
                 $("#editfname").val(d.FName);
                 $("#editlname").val(d.LName);
                 $("#editusername").val(d.UserName);
                 $("#editpass").val(d.Password);
                 $("#editemail").val(d.Email);
+                $("#editEmpAddress").val(d.EmpAddress);
+                $("#editDate").val(d.JoiningDate);
+                $("#IsHod").val(d.IsHOD);
+                $("#Gender").val(d.Gender);
+                $(".Gender").val(d.Gender);
                 $("#editphone").val(d.Phone);
-                $("#editimage").val(d.EmpImage);
+                $("#editimage1").val(d.EmpImage);
+                $("#editcompany").val(d.CmpId);
+                $("#USERIDfff").val(d.DeptId);
+                $("#editrole").val(d.RoleId);
 
                 $("#edit_employee").modal("show");
+                $.get("/Employee/Getdept", { CompanyIDf: $("#editcompany").val() }, function (data) {
+                    $("#USERIDfff").empty();
+                    $.each(data, function (index, row) {
+                        $("#USERIDfff").append("<option value='" + row.DeptId + "'>" + row.DeptName + "</option>")
+                    });
+                });
             }
         });
     });
 
-    $(".deleteEmployeeBtn").click(function () {
-        var id = $(this).data("id");
-        console.log(id);
-        //return;
-        alert(id);
+    function DeleteEmployee(Employeeid) {
+
+        $("#Designation_id").val(Employeeid);
+
+
+
+    }
+
+
+    var deletee = function () {
+
+        var idd = $("#Designation_id").val();
         $.ajax({
-            type: "GET",
-            url: "/Employee/DelEmployee/?DesignationiD=" + id + "",
-            //data: "{DesignationiD:" + id + "}",
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (d) {
-                //var dd = JSON.parse(d).d;
-                //var department = JSON.parse(dd);
-                //console.log(department);
 
-                console.log(d);
+            type: "post",
+            url: "/Employee/DeleteEmployee",
+            data: { Employeeid: idd },
+            success: function (result) {
 
-                $("#empid1").val(d.EmpId);
-                $("#editfname").val(d.FName);
-                $("#editlname").val(d.LName);
-                $("#editusername").val(d.UserName);
-                $("#editpass").val(d.Password);
-                $("#editemail").val(d.Email);
-                $("#editphone").val(d.Phone);
-                $("#editimage").val(d.Image);
-
-                $("#delete_employee").modal("show");
-            }
+                $("Designation_id").val(null);
+                $("#delete_employee").modal('hide');
+                window.location.href = "/Employee/Employee";
+            },
         });
-    });
+
+    }
+
+
+
+
+    //$(".deleteEmployeeBtn").click(function () {
+    //    var id = $(this).data("id");
+    //    console.log(id);
+    //    //return;
+    //    alert(id);
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Employee/DelEmployee/?DesignationiD=" + id + "",
+    //        //data: "{DesignationiD:" + id + "}",
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (d) {
+    //            //var dd = JSON.parse(d).d;
+    //            //var department = JSON.parse(dd);
+    //            //console.log(department);
+
+    //            console.log(d);
+
+    //            $("#empid1").val(d.EmpId);
+    //            $("#editfname").val(d.FName);
+    //            $("#editlname").val(d.LName);
+    //            $("#editusername").val(d.UserName);
+    //            $("#editpass").val(d.Password);
+    //            $("#editemail").val(d.Email);
+    //            $("#editphone").val(d.Phone);
+    //            $("#editimage").val(d.Image);
+
+    //            $("#delete_employee").modal("show");
+    //        }
+    //    });
+    //});
 </script>
